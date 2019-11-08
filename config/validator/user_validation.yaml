@@ -1,0 +1,35 @@
+App\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: email
+        errorPath: email
+        message: 'Le mail "{{ value }}" est déjà utilisé.'
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: username
+        errorPath: username
+        message: 'Le nom "{{ value }}" est déjà utilisé.'
+  properties:
+    username:
+      - NotBlank: ~
+      - Length:
+          min: 3
+          max: 100
+          minMessage: 'Le nom "{{ value }}" doit avoir plus de 3 caractères'
+          maxMessage: 'Le nom "{{ value }}" ne peut pas avoir plus de 100 caractères'
+    email:
+      - Email:
+          message: 'Le mail "{{ value }}" est invalide.'
+      - NotBlank: ~
+      - Length:
+          min: 6
+          max: 255
+          minMessage: 'Le mail "{{ value }}" doit avoir plus de 6 caractères'
+          maxMessage: 'Le mail "{{ value }}" doit avoir moins de 255 caractères'
+    password:
+      - Length:
+          min: 8
+          max: 255
+          minMessage: 'Le mot de passe doit avoir au minimum "{{ limit }}" caractères.'
+      - Regex:
+          pattern: '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/i'
+          message: 'Le mot de passe doit contenir au moins une lettre, un chiffre et avoir au moins 8 caractères'
