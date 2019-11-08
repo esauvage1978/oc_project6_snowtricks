@@ -1,0 +1,43 @@
+<!--/ Section Contact-Footer Star /-->
+<div class="d-none d-sm-block">
+    <section class="paralax-mf footer-paralax bg-image route"
+             style="
+            background-image: url({{ absolute_url( asset('./img/fond_snowtricks.jpg')) }} )">
+        <div class="overlay-mf"></div>
+        <footer>
+            <div class="container-fluid">
+                <div class="row text-muted">
+                    <div class="col-sm-4 menu">
+                        <a href="{{ path('home') }}">Les figures</a>
+                    </div>
+                    <div class="col-sm-4 copyright">
+                        Snowtricks - Copyright &copy; 2019
+                    </div>
+                    <div class="col-sm-4 credits">
+                        <a href="https://mylostuniver.com">
+                            Réalisé par <strong>Emmanuel SAUVAGE</strong>.
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </section>
+    <!--/ Section Contact-footer End /-->
+</div>
+<div class="d-block d-sm-none">
+    <footer>
+        <div class="jumbotron">
+            <a href="https://mylostuniver.com">
+                Réalisé par <strong>Emmanuel SAUVAGE</strong>.
+            </a>
+        </div>
+        <nav class="navbar fixed-bottom bg-dark navbar-dark">
+
+            <a class="nav-link js-scroll " id="home" href="{{ path('home') }}">
+                <i class="fas fa-home fa-2x"></i>
+            </a>
+
+
+        </nav>
+    </footer>
+</div>
