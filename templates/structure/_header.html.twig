@@ -1,0 +1,23 @@
+<header class="d-none d-sm-block">
+    <nav class="navbar navbar-b navbar-trans navbar-expand-md fixed-top " id="mainNav">
+
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarDefault"
+                aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <a class="navbar-brand js-scroll" href="{{ path('home') }}" title="Retour à la page d'acueil de snowtricks ">
+            <img src="{{ absolute_url( asset('/img/logo_snowtricks.png')) }}" height="50px"
+                 alt="logo snowtricks"/>
+        </a>
+        <div class="navbar-collapse collapse" id="navbarDefault">
+            <ul class="navbar-nav  ml-auto mr-20 mt-2 ">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll " id="home" href="{{ path('home') }}">Page d'accueil</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+</header>
