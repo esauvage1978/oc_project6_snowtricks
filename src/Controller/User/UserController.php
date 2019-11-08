@@ -19,7 +19,6 @@ class UserController extends AbstractController
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
      * @param Request $request
-     * @param User $user
      * @param UserManager $manager
      *
      * @return Response
