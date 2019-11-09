@@ -33,11 +33,19 @@
             </div>
         </div>
     </div>
-    {{  form_rest(form) }}
-    <div class="d-none">
 
+    <div class="d-none">
+        {{  form_rest(form) }}
     </div>
     {{ form_end(form) }}
 
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        $(function () {
+
+            $('div.form-check').addClass('icheck-primary d-inline');
+        })
+    </script>
+{% endblock %}
