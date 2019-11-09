@@ -6,6 +6,10 @@
 /public/bundles/
 /var/
 /vendor/
+.idea
+/src/Migrations
+composer.lock
+symfony.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
