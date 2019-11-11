@@ -25,7 +25,7 @@ App\Entity\User:
           max: 255
           minMessage: 'Le mail "{{ value }}" doit avoir plus de 6 caractères'
           maxMessage: 'Le mail "{{ value }}" doit avoir moins de 255 caractères'
-    password:
+    plainPassword:
       - Length:
           min: 8
           max: 255
