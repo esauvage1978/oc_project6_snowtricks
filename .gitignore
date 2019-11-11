@@ -9,6 +9,7 @@
 .idea
 composer.lock
 symfony.lock
+/src/Migrations
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
