@@ -7,9 +7,9 @@
 /var/
 /vendor/
 .idea
-/src/Migrations
 composer.lock
 symfony.lock
+/src/Migrations
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
