@@ -1,0 +1,44 @@
+{% extends 'single.html.twig' %}
+
+{% block title %}{{ parent() }} Figure{% endblock %}
+
+{% block stylesheets %}
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('css/trick.css')) }}">
+{% endblock %}
+
+
+
+{% block single_body %}
+
+
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
+            <div class="card ">
+                <div class="figure-mainimage-container">
+                    <img src="{{ absolute_url(asset('/img/trick_default.jpg')) }}" alt="Snow" style="width:100%;">
+
+                    <div class="centered">{{ trick.name }}</div>
+                </div>
+                <div class="card-body">
+                    {{ trick.content | raw }}
+                </div>
+
+                <div class="card-footer text-muted text-center">
+                    <span class="badge badge-info">Publié le : {{ trick.createAt | date('d-m-Y') }}</span>
+                    {% if trick.modifyAt %}
+                        <span class="badge badge-info">Mis à jour : {{ trick.modifyAt | date('d-m-Y') }}</span>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+
