@@ -26,6 +26,24 @@
                             <th>E-mail</th>
                             <td>{{ user.email }}</td>
                         </tr>
+                        <tr>
+                            <th>Administrateur</th>
+                            <td >
+                                <span class="text-{{ 'ROLE_ADMIN' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Gestionnaire</th>
+                            <td >
+                                <span class="text-{{ 'ROLE_GESTIONNAIRE' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Utilisateur</th>
+                            <td >
+                                <span class="text-{{ 'ROLE_USER' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
