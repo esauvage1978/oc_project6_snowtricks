@@ -25,9 +25,10 @@ class UserValidator
      * @param User $user
      * @return bool
      */
-    public function isValide(User $user): bool
+    public function isValid(User $user): bool
     {
-        return  $this->getErrors($user)===null;
+        $error = $this->validator->validate($user);
+        return  !count($error)?true:false;
     }
 
     /**
@@ -36,7 +37,6 @@ class UserValidator
      */
     public function getErrors(User $user): ?string
     {
-        $error = $this->validator->validate($user);
-        return !count($error)?null:(string)$error;
+        return (string)$this->validator->validate($user);
     }
 }

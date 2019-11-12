@@ -36,7 +36,7 @@ class UserController extends AbstractController
 
                 return $this->redirectToRoute('home');
             }
-            $this->addFlash('danger', 'La création a echoué. En voici les raisons : ' . $manager->getError($user));
+            $this->addFlash('danger', 'La création a echoué. En voici les raisons : ' . $manager->getErrors($user));
         }
 
         return $this->render('user/new.html.twig', [
