@@ -2,13 +2,13 @@
     <h2 class="m-0 text-dark">{{ domaine }} </h2>
 </div>
 <div class="col">
-    <ol class="breadcrumb float-sm-right">
-        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         {% if listeUrl is defined %}
             <li class="breadcrumb-item"><a href="{{ path(listeUrl) }}">Liste</a></li>
-        {% endif %}
-
-        <li class="breadcrumb-item active">{{ action }}</li>
-    </ol>
+        {% endif %}            
+            <li class="breadcrumb-item active">{{ action }}</li>
+        </ol>
+    </nav>
 </div>
