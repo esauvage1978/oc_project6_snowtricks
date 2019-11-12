@@ -95,7 +95,7 @@ class CategoryFixtures extends Fixture
 
     private function checkAndPersist(ObjectManager $manager, Category $instance)
     {
-        if ($this->validator->isValide($instance)) {
+        if ($this->validator->isValid($instance)) {
             $manager->persist($instance);
         }
     }

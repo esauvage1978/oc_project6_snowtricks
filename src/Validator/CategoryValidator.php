@@ -3,6 +3,7 @@
 namespace App\Validator;
 
 use App\Entity\Category;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CategoryValidator
@@ -13,10 +14,15 @@ class CategoryValidator
     private $validator;
 
     /**
-     * UserValidator constructor.
+     * @var ConstraintViolationListInterface
+     */
+    private $errors;
+
+    /**
+     * CategoryValidator constructor.
      * @param ValidatorInterface $validator
      */
-    public function __construct(ValidatorInterface $validator)
+    public function __construct( ValidatorInterface $validator)
     {
         $this->validator = $validator;
     }
@@ -25,18 +31,18 @@ class CategoryValidator
      * @param Category $category
      * @return bool
      */
-    public function isValide(Category $category): bool
+    public function isValid(Category $category): bool
     {
-        return $this->getErrors($category) === null;
+        $this->errors = $this->validator->validate($category);
+        return  !count($this->errors)?true:false;
     }
 
     /**
-     * @param Category $trick
+     * @param Category $category
      * @return string|null
      */
     public function getErrors(Category $category): ?string
     {
-        $error = $this->validator->validate($category);
-        return !count($error) ? null : (string)$error;
+        return (string)$this->errors;
     }
 }

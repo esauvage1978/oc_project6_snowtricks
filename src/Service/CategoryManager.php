@@ -35,7 +35,7 @@ class CategoryManager
      */
     public function update(Category $category): bool
     {
-        if (!$this->validator->isValide($category)) {
+        if (!$this->validator->isValid($category)) {
             return false;
         }
 
