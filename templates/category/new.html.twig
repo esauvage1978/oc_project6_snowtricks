@@ -1,0 +1,36 @@
+{% extends 'single.html.twig' %}
+
+{% block title %}{{ parent() }} Catégorie{% endblock %}
+
+{% block stylesheets %}
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/summernote/summernote-bs4.css')) }}">
+{% endblock %}
+
+{% block single_header %}
+    {{ include('structure/_breadcrum.html.twig',
+        {
+            'domaine': 'Catégorie',
+            'action' : 'Création',
+            'listeUrl':'category_index'
+        }) }}
+{% endblock %}
+
+{% block single_body %}
+<div class="row justify-content-center">
+    {{ include ('category/_form.html.twig')}}
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+    <!-- Summernote -->
+    <script src="{{ absolute_url( asset('plugins/summernote/summernote-bs4.min.js')) }}"></script>
+    <script>
+        $(function () {
+            // Summernote
+            $('.textarea').summernote()
+        })
+    </script>
+{% endblock %}
+
