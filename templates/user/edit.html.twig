@@ -10,7 +10,7 @@
 {% block single_header %}
     {{ include('structure/_breadcrum.html.twig', {
         'domaine': 'Utilisateur' ,
-        'action' : 'Création',
+        'action' : 'Modification',
         'listeUrl': 'user_index'
     }) }}
 {% endblock %}
@@ -48,7 +48,6 @@
 {% block javascripts %}
     <script>
         $(function () {
-
             $('div.form-check').addClass('icheck-primary d-inline');
         })
     </script>
