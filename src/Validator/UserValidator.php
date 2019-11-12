@@ -3,6 +3,7 @@
 namespace App\Validator;
 
 use App\Entity\User;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class UserValidator
@@ -11,6 +12,11 @@ class UserValidator
      * @var ValidatorInterface
      */
     private $validator;
+
+    /**
+     * @var ConstraintViolationListInterface
+     */
+    private $errors;
 
     /**
      * UserValidator constructor.
@@ -27,8 +33,8 @@ class UserValidator
      */
     public function isValid(User $user): bool
     {
-        $error = $this->validator->validate($user);
-        return  !count($error)?true:false;
+        $this->errors = $this->validator->validate($user);
+        return  !count($this->errors)?true:false;
     }
 
     /**
@@ -37,6 +43,6 @@ class UserValidator
      */
     public function getErrors(User $user): ?string
     {
-        return (string)$this->validator->validate($user);
+        return (string)$this->errors;
     }
 }
