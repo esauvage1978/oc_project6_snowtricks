@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('css/home.css')) }}">
+{% endblock %}
 
     {% block body %}
 
@@ -7,7 +11,66 @@
 
         <section class="content " id="section_body">
             <div class="container-fluid ">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="title-box text-center">
 
+                            <h3 class="title-a">
+                                Les figures du SnowBoard
+                            </h3>
+
+                            <p class="subtitle-a">
+                                SnowTricks est un site communautaire ayant pour objectif de partager les ressources autour
+                                des figures du snowboard.
+                            </p>
+                            <p class="subtitle-a">
+                                Le site est une idée originale de l'entrepreuneur Jimmy Sweat.
+                            </p>
+                            <a id="list_figure"></a>
+                            <div class="line-mf"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+
+                    {% set section=0 %}
+
+                    {% for trick in tricks %}
+
+                        <div class="bloc_{{ section }} col-sm-12 col-md-4 col-lg-3 col-xl-2 m-3 {{ (loop.index > 15) ?'d-none':''}}">
+                            <div class="card">
+                                <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                                    <img src="{{ absolute_url(asset('/img/trick_default.jpg')) }}" alt=""
+                                         class="card-img-top">
+                                </a>
+                                <div class="card-body">
+                                    <h4>
+                                        <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                                            {{ trick.name }}
+                                            {{ section }}
+
+
+                                        </a>
+                                    </h4>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        {% if (loop.index % 5   ==0) %}
+                        {% set section= loop.index / 5 %}
+                            {% if loop.index>=15 %}
+                                <div id="btn_{{ section  }}" class="bloc_{{ section -1 }}  col-sm-1 m-5 {{ (loop.index > 15) ?'d-none':''}}">
+                                    <button class="btn btn-primary mr-3"
+                                            onclick="$('#btn_{{ section }}').remove(); $('.bloc_{{ section }}').removeClass('d-none'); ">Voir plus
+                                    </button>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </div>
             </div>
         </section>
     {% endblock %}
