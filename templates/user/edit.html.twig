@@ -1,0 +1,55 @@
+{% extends 'single.html.twig' %}
+
+{% block title %}{{ parent() }} Utilisateur{% endblock %}
+
+{% block stylesheets %}
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css')) }}">
+{% endblock %}
+
+{% block single_header %}
+    {{ include('structure/_breadcrum.html.twig', {
+        'domaine': 'Utilisateur' ,
+        'action' : 'Création',
+        'listeUrl': 'user_index'
+    }) }}
+{% endblock %}
+
+{% block single_body %}
+
+
+    {{ form_start(form) }}
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <div class="card ">
+
+                {{  include ('user/_form.html.twig') }}
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col  d-flex justify-content-between align-items-center">
+
+                            <button class="btn btn-success " name="new" id="new" >
+                                <i class="fas fa-save"></i> Enregistrer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-none">
+        {{  form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+
+            $('div.form-check').addClass('icheck-primary d-inline');
+        })
+    </script>
+{% endblock %}
