@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Trick;
+use App\Entity\User;
 use App\Helper\Slugger;
 use App\Validator\TrickValidator;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -57,4 +58,12 @@ class TrickManager
         return $this->validator->getErrors($trick);
     }
 
+    /**
+     * @param Trick $trick
+     */
+    public function remove(Trick $trick)
+    {
+        $this->manager->remove($trick);
+        $this->manager->flush();
+    }
 }

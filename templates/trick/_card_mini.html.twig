@@ -16,7 +16,18 @@
                href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                 <i class="fas fa-edit"></i>
             </a>
+            <div class="ml-2">
+                <span class="btn btn-danger btn-sm" onclick="$('#delete').click();">
+                    <i class="fas fa-trash"></i>
+                </span>
+            </div>
         </div>
     </div>
 
 </article>
+<div class="d-none">
+    {{ include ('share/_delete.html.twig',{
+        'domaine':'trick',
+        'id':trick.id
+    }) }}
+</div>

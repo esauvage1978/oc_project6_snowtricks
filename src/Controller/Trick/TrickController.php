@@ -87,4 +87,23 @@ class TrickController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{id}", name="trick_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param Trick $trick
+     * @param TrickManager $trickManager
+     * @return Response
+     */
+    public function deleteAction(Request $request, Trick $trick, TrickManager $trickManager ): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
+
+            $this->addFlash('success', 'La figure est supprimée');
+            $trickManager->remove($trick);
+        }
+
+        return $this->redirectToRoute('home');
+    }
 }
