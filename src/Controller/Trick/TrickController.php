@@ -2,8 +2,12 @@
 
 namespace App\Controller\Trick;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\Trick\CommentType;
 use App\Form\Trick\TrickType;
+use App\Repository\CommentRepository;
+use App\Service\CommentManager;
 use App\Service\TrickManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,20 +49,48 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="trick_show", methods={"GET"})
+     * @Route("/{slug}", name="trick_show", methods={"GET","POST"})
      *
+     * @param Request $request
      * @param Trick $trick
+     * @param CommentManager $commentManager
+     * @param CommentRepository $commentRepository
      * @return Response
      */
-    public function showAction(Trick $trick): Response
+    public function showAction(
+        Request $request,
+        Trick $trick,
+        CommentManager $commentManager,
+        CommentRepository $commentRepository
+    ): Response
     {
+
+        $comments = $commentRepository->findBy(['trick'=>$trick]);
+
+        $comment = new Comment();
+        $formComment = $this->createForm(CommentType::class, $comment);
+        $formComment->handleRequest($request);
+
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+
+            if ($commentManager->update($comment,$trick, $this->getUser())) {
+                $this->addFlash('success', 'Commentaire ajouté');
+
+                return $this->redirectToRoute('trick_show', [
+                        'slug' => $trick->getSlug(),
+                    ]
+                );
+            }
+            $this->addFlash('danger', 'Erreur lors de l\'ajout du commentaire : ' . $commentManager->getErrors($comment));
+        }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'form' => $formComment->createView(),
+            'comments' => $comments
         ]);
     }
 
-
-          
       /**
      * @Route("/{slug}/edit", name="trick_edit", methods={"GET","POST"})
      * @param Request $request
