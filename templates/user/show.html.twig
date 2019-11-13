@@ -13,39 +13,18 @@
 
 {% block single_body %}
     <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-borderless">
-                        <tbody>
-                        <tr>
-                            <th class="col-3">Nom&nbsp;d'utilisateur</th>
-                            <td>{{ user.username }}</td>
-                        </tr>
-                        <tr>
-                            <th>E-mail</th>
-                            <td>{{ user.email }}</td>
-                        </tr>
-                        <tr>
-                            <th>Administrateur</th>
-                            <td >
-                                <span class="text-{{ 'ROLE_ADMIN' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Gestionnaire</th>
-                            <td >
-                                <span class="text-{{ 'ROLE_GESTIONNAIRE' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Utilisateur</th>
-                            <td >
-                                <span class="text-{{ 'ROLE_USER' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+        <section class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <article class="card">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="{{ absolute_url( asset('/img/avatar.png')) }}"
+                             alt="User profile picture">
+                    </div>
+
+                    <h3 class="profile-username text-center">{{ user.username }}</h3>
+
+                    <p class="text-muted text-center">{{ user.email }}</p>
                 </div>
                 <div class="footer">
 
@@ -55,9 +34,40 @@
                     </a>
 
                 </div>
-            </div>
+            </article>
+        </section>
+        <aside class="col-sm-12 col-md-4">
+            <article class="card">
+                <div class="card-footer">
+                    Habilitations
+                </div>
+                <div class="list-group list-group-flush dropright">
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Administrateur</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Administrateur</span>
+                        {% endif %}
+                    </div>
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_GESTIONNAIRE' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Gestionnaire</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Gestionnaire</span>
+                        {% endif %}
+                    </div>
 
-        </div>
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_USER' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Utilisateur</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Utilisateur</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
 
+
+        </aside>
     </div>
 {% endblock %}

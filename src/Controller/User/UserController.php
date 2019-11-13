@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserShowController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * @Route("/user/{id}", name="user_show", methods={"GET"})
