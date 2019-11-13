@@ -31,6 +31,13 @@
                             <button class="btn btn-success " name="new" id="new" >
                                 <i class="fas fa-save"></i> Enregistrer
                             </button>
+
+                            {% if user.id != "" %}
+                                <span class="btn btn-danger " onclick="$('#delete').click();">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </span>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
@@ -43,6 +50,12 @@
     </div>
     {{ form_end(form) }}
 
+    <div class="d-none">
+        {{ include ('share/_delete.html.twig',{
+            'domaine':'user',
+            'id':user.id
+        }) }}
+    </div>
 {% endblock %}
 
 {% block javascripts %}
