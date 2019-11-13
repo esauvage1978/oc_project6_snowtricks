@@ -1,15 +1,17 @@
 
 ###> symfony/framework-bundle ###
+/.env
 /.env.local
 /.env.local.php
 /.env.*.local
 /public/bundles/
 /var/
 /vendor/
-.idea
+/.idea/
 composer.lock
 symfony.lock
-/src/Migrations
+/src/Migrations/
+/symfony.lock
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
