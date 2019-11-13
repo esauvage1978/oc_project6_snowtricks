@@ -3,6 +3,7 @@
 namespace App\Controller\User;
 
 use App\Form\User\UserType;
+use App\Repository\UserRepository;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +28,21 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
-
+  
+  
+    /**
+     * @Route("/", name="user_index", methods={"GET"})
+     *
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+    public function indexAction(UserRepository $userRepository): Response
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $userRepository->findAll(),
+        ]);
+    }      
+          
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
