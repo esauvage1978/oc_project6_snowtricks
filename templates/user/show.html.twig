@@ -2,10 +2,6 @@
 
 {% block title %}{{ parent() }} Utilisateur{% endblock %}
 
-{% block stylesheets %}
-    <link rel="stylesheet" href="{{ absolute_url( asset('css/profil.css')) }}">
-{% endblock %}
-
 {% block single_header %}
     {{ include('structure/_breadcrum.html.twig',
         {
@@ -30,15 +26,13 @@
 
                     <p class="text-muted text-center">{{ user.email }}</p>
                 </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col  d-flex justify-content-between align-items-center">
-                            <a class="btn btn-info btn-sm"
-                               href="{{ path('user_edit', {'id': user.id}) }}">
-                                <i class="fas fa-edit"></i> Editer
-                            </a>
-                        </div>
-                    </div>
+                <div class="footer">
+
+                    <a class="btn btn-info btn-sm"
+                       href="{{ path('user_edit', {'id': user.id}) }}" >
+                        <i class="fas fa-edit"></i> Editer
+                    </a>
+
                 </div>
             </article>
         </section>
