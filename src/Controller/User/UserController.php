@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserListController extends AbstractController
+class UserController extends AbstractController
 {
     /**
      * @Route("/user/", name="user_index", methods={"GET"})
