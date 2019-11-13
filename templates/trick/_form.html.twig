@@ -1,0 +1,10 @@
+<div class="card-body">
+    <div class="form-group row">
+        {{ form_label(form.name,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+        <div class="col">
+            {{ form_widget(form.name) }}
+        </div>
+    </div>
+
+    {{ form_row(form.content) }}
+</div>
