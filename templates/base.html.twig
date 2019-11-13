@@ -28,9 +28,10 @@
     <script src="{{ absolute_url( asset('/vendor/devfolio-master/lib/jquery/jquery.min.js')) }}"></script>
     {% block stylesheets %}
     {% endblock %}
-</head>
-<body id="page-top">
 
+</head>
+<body id="page-top"  class="{{  '/trick/' in app.request.uri ? 'bg-image':''}}"
+      style="{{  '/trick/' in app.request.uri ? 'background-image:url(' ~ absolute_url( asset('./img/fond_snowtricks.jpg')) ~ ')':''}} ">
 {{ include('structure/_header.html.twig') }}
 
 {% block body %}
