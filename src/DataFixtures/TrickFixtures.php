@@ -8,6 +8,7 @@ use App\Validator\TrickValidator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
+use Faker\Generator;
 
 class TrickFixtures extends Fixture
 {
@@ -100,7 +101,7 @@ class TrickFixtures extends Fixture
             [
                 'name' => 'stalefish',
                 'content' => 'saisie de la carre backside de la planche entre les deux pieds avec la main arrière',
-            ]
+            ],
         ];
 
     /**
@@ -114,7 +115,7 @@ class TrickFixtures extends Fixture
     private $validator;
 
     /**
-     * @var \Faker\Generator
+     * @var Generator
      */
     private $faker;
 
@@ -127,7 +128,7 @@ class TrickFixtures extends Fixture
     {
         $this->validator = $validator;
         $this->trickManager = $trickManager;
-        $this->faker = new Factory;
+        $this->faker = new Factory();
         $this->faker = $this->faker->create('fr_FR');
     }
 
@@ -147,7 +148,7 @@ class TrickFixtures extends Fixture
     private function checkAndPersist(ObjectManager $manager, Trick $instance)
     {
         $this->trickManager->initialise($instance);
-        if ($this->validator->isValide($instance)) {
+        if ($this->validator->isValid($instance)) {
             $manager->persist($instance);
         }
     }
@@ -158,6 +159,7 @@ class TrickFixtures extends Fixture
             ->setName($data['name'])
             ->setContent($data['content'])
             ->setCreateAt($this->faker->dateTimeBetween('-6 months'));
+
         return $instance;
     }
 }
