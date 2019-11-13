@@ -21,7 +21,10 @@
         {{ include ('category/_form.html.twig') }}
     </div>
     <div class="d-none">
-        {{ include ('category/_delete_form.html.twig') }}
+        {{ include ('share/_delete.html.twig',{
+            'domaine':'category',
+            'id':category.id
+        }) }}
     </div>
 {% endblock %}
 
