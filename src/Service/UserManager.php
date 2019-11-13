@@ -37,6 +37,7 @@ class UserManager
     {
         $this->initialiseUser($user);
 
+
         if (!$this->validator->isValid($user)) {
             return false;
         }
@@ -55,6 +56,7 @@ class UserManager
     public function encodePassword(User $user)
     {
         $plainPassword = $user->getPlainPassword();
+
         if (!empty($plainPassword)) {
             $user->setPassword(
                 $this->passwordEncoder->encodePassword(
@@ -64,9 +66,20 @@ class UserManager
         }
     }
 
+
     public function getErrors(User $entity)
     {
         return $this->validator->getErrors($entity);
+    }
+
+
+    /**
+     * @param User $user
+     */
+    public function remove(User $user)
+    {
+        $this->manager->remove($user);
+        $this->manager->flush();
     }
 
 }

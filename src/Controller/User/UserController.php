@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller\User;
 
 use App\Entity\User;
@@ -18,6 +19,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
 
+    /**
+     * @Route("/{id}", name="user_delete", methods={"DELETE"})
+     *
+     * @param Request $request
+     * @param User $user
+     * @param UserManager $categoryManager
+     * @return Response
+     */
+    public function deleteAction(Request $request, User $user, UserManager $userManager ): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+
+            $this->addFlash('success', 'L\{utilisateur est supprimé');
+            $userManager->remove($user);
+        }
+
+        return $this->redirectToRoute('user_index');
+    }  
+      
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      *
