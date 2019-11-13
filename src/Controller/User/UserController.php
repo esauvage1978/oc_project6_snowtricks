@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user")
  */
-class UserModifyController extends AbstractController
+class UserController extends AbstractController
 {
 
     /**
@@ -36,7 +36,7 @@ class UserModifyController extends AbstractController
 
                 return $this->redirectToRoute('user_index');
             }
-            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getError($user));
+            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getErrors($user));
         }
 
         return $this->render('user/edit.html.twig', [
