@@ -45,7 +45,8 @@
                             {{ app.user.username }}
                         </a>
                         <div class="dropdown-menu" style="margin-left:-100px" aria-labelledby="navbarDropdown">
-
+                            <a class="dropdown-item" href="{{ path('profil_home') }}">Votre compte</a>
+                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ path('user_logout') }}">{{ 'Logout' | trans }}</a>
                         </div>
                     </li>

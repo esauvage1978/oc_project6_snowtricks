@@ -1,6 +1,6 @@
 {% extends 'single.html.twig' %}
 
-{% block title %}{{ parent() }} Utilisateur{% endblock %}
+{% block title %}{{ parent() }} Votre compte{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ absolute_url( asset('css/profil.css')) }}">
@@ -10,8 +10,7 @@
     {{ include('structure/_breadcrum.html.twig',
         {
             'domaine': 'Utilisateur',
-            'action' : 'Consultation',
-            'listeUrl':'user_index'
+            'action' : 'Votre compte'
         }) }}
 {% endblock %}
 
@@ -30,17 +29,40 @@
 
                     <p class="text-muted text-center">{{ user.email }}</p>
                 </div>
+            </article>
+
+            {{ form_start(form) }}
+            <article class="card mt-2 ">
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        {{ form_label(form.username,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+                        <div class="col">
+                            {{ form_errors(form.username) }}
+                            {{ form_widget(form.username) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.email,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+                        <div class="col">
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email) }}
+                        </div>
+                    </div>
+                </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col  d-flex justify-content-between align-items-center">
-                            <a class="btn btn-info btn-sm"
-                               href="{{ path('user_edit', {'id': user.id}) }}">
-                                <i class="fas fa-edit"></i> Editer
-                            </a>
+
+                            <button class="btn btn-info " name="update" id="update"><i class="fas fa-pencil-alt"></i>
+                                Modifier
+                            </button>
+
                         </div>
                     </div>
                 </div>
             </article>
+            {{ form_end(form) }}
         </section>
         <aside class="col-sm-12 col-md-4">
             <article class="card">
