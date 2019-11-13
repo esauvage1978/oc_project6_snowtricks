@@ -82,4 +82,15 @@ class UserManager
         $this->manager->flush();
     }
 
+
+    public function checkOldPassword(User $user, string $oldpwd): bool
+    {
+        return $this->passwordEncoder->isPasswordValid($user, $oldpwd);
+    }
+
+    public function checkPasswordConfirmation(User $user,string $newpwd, string $confirmation): bool
+    {
+        $user->setPlainPassword($newpwd);
+        return $newpwd === $confirmation;
+    }
 }
