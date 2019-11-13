@@ -1,0 +1,17 @@
+.figure-mainimage-container{
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3vw;
+    color: #296dde;
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 1);
+    background-color: rgba(60, 213, 255, 0.3);
+    border-radius:15px 15px 15px 15px;
+}
