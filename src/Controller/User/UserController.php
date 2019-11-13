@@ -2,7 +2,6 @@
 
 namespace App\Controller\User;
 
-use App\Entity\User;
 use App\Form\User\UserType;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,6 +14,20 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class UserController extends AbstractController
 {
+
+    /**
+     * @Route("/{id}", name="user_show", methods={"GET"})
+     *
+     * @param User $user
+     * @return Response
+     */
+    public function showAction(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
 
     /**
      * @Route("/new", name="user_new", methods={"GET","POST"})
