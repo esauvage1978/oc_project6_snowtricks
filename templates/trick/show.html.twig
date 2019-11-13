@@ -17,7 +17,17 @@
             <article class="card ">
                 <div class="figure-mainimage-container">
                     <img src="{{ absolute_url(asset('/img/trick_default.jpg')) }}" alt="Snow" style="width:100%;">
-
+                    <div class="top-right d-flex  flex-row">
+                        <a class="btn btn-info "
+                           href="{{ path('trick_edit', {'slug': trick.slug}) }}">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="ml-2">
+                            <span class="btn btn-danger " onclick="$('#delete').click();">
+                                <i class="fas fa-trash"></i>
+                            </span>
+                        </div>
+                    </div>
                     <div class="centered">{{ trick.name }}</div>
                 </div>
                 <div class="card-body">
@@ -36,7 +46,12 @@
         </div>
     </div>
 
-
+    <div class="d-none">
+        {{ include ('share/_delete.html.twig',{
+            'domaine':'trick',
+            'id':trick.id
+        }) }}
+    </div>
 {% endblock %}
 
 
