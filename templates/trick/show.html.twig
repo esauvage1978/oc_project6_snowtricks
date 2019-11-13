@@ -3,8 +3,8 @@
 {% block title %}{{ parent() }} Figure{% endblock %}
 
 {% block stylesheets %}
-    <!-- summernote -->
     <link rel="stylesheet" href="{{ absolute_url( asset('css/trick.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url( asset('css/comment.css')) }}">
 {% endblock %}
 
 
@@ -42,6 +42,43 @@
 
                 </div>
 
+            </article>
+
+            <article class="card mt-2">
+                {% if app.user %}
+                    <div class="card-body">
+                        <div class="card-text">
+                            <div class="form-group">
+                                {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                                <div class="form-group card-text">
+                                    <button type="submit" class="btn btn-outline-dark">Ajouter
+                                        votre
+                                        commentaire
+                                    </button>
+                                </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card-body">
+                        <p>Veuillez vous connecter pour laisser un commentaire
+                            <a href="{{ path('user_login') }}">Se connecter</a>
+
+                        </p>
+                    </div>
+                {% endif %}
+
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        {% for comment in comments %}
+                            {{ include('trick/_comment.html.twig') }}
+                        {% endfor %}
+                    </ul>
+
+
+                </div>
             </article>
         </div>
     </div>
