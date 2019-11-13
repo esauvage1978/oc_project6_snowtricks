@@ -2,6 +2,8 @@
 
 namespace App\Controller\User;
 
+use App\Entity\User;
+use App\Form\User\UserEditType;
 use App\Form\User\UserType;
 use App\Repository\UserRepository;
 use App\Service\UserManager;
@@ -68,6 +70,35 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+          
+     /**
+     * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param UserManager $manager
+     * @param User $user
+     *
+     * @return Response
+     */
+    public function editAction(Request $request,User $user, UserManager $manager): Response
+    {
+        $form = $this->createForm(UserEditType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($manager->update($user)) {
+                $this->addFlash('success', 'Modification de l\'utilisateur effectuée');
+
+                return $this->redirectToRoute('user_index');
+            }
+            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getErrors($user));
+        }
+
+        return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
