@@ -2,11 +2,11 @@
 
 namespace App\Validator;
 
-use App\Entity\Trick;
+use App\Entity\Comment;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class TrickValidator
+class CommentValidator
 {
     /**
      * @var ValidatorInterface
@@ -28,20 +28,20 @@ class TrickValidator
     }
 
     /**
-     * @param Trick $trick
+     * @param Comment $comment
      * @return bool
      */
-    public function isValid(Trick $trick): bool
+    public function isValid(Comment $comment): bool
     {
-        $this->errors = $this->validator->validate($trick);
+        $this->errors = $this->validator->validate($comment);
         return  !count($this->errors)?true:false;
     }
 
     /**
-     * @param Trick $trick
+     * @param Comment $comment
      * @return string|null
      */
-    public function getErrors(Trick $trick): ?string
+    public function getErrors(Comment $comment): ?string
     {
         return (string)$this->errors;
     }
