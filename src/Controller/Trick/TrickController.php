@@ -28,7 +28,8 @@ class TrickController extends AbstractController
             'trick' => $trick,
         ]);
     }
-          
+
+    /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      * @param Request $request
      * @param TrickManager $manager
@@ -37,7 +38,7 @@ class TrickController extends AbstractController
      */
     public function newAction(Request $request, TrickManager $manager): Response
     {
-        $trick=new Trick();
+        $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
@@ -52,6 +53,35 @@ class TrickController extends AbstractController
         }
 
         return $this->render('trick/new.html.twig', [
+            'trick' => $trick,
+            'form' => $form->createView(),
+        ]);
+    }
+          
+      /**
+     * @Route("/{slug}/edit", name="trick_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Trick $trick
+     * @param TrickManager $manager
+     *
+     * @return Response
+     */
+    public function editAction(Request $request,Trick $trick, TrickManager $manager): Response
+    {
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($manager->update($trick)) {
+                $this->addFlash('success', 'Modification de la figure effectuée');
+
+                return $this->redirectToRoute('home');
+            }
+            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getError($trick));
+        }
+
+        return $this->render('trick/edit.html.twig', [
             'trick' => $trick,
             'form' => $form->createView(),
         ]);
