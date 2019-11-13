@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user")
  */
-class UserDeleteController extends AbstractController
+class UserController extends AbstractController
 {
 
     /**
