@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/trick")
  */
-class TrickShowController extends AbstractController
+class TrickController extends AbstractController
 {
 
     /**
