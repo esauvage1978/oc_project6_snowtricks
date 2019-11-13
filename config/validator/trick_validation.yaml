@@ -1,0 +1,22 @@
+App\Entity\Trick:
+constraints:
+  - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+      fields: name
+      errorPath: name
+      message: 'Le nom de la figure "{{ value }}" est déjà utilisé.'
+  - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+      fields: slug
+      errorPath: slug
+      message: 'Le slug de la figure "{{ value }}" est déjà utilisé.'
+properties:
+  name:
+    - NotBlank: ~
+    - Length:
+        min: 3
+        max: 255
+        minMessage: 'Le nom "{{ value }}" doit avoir plus de 3 caractères'
+        maxMessage: 'Le nom "{{ value }}" ne peut pas avoir plus de 255 caractères'
+content:
+  - NotBlank: ~
+slug:
+  - NotBlank: ~

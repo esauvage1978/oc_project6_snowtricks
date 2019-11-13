@@ -1,0 +1,32 @@
+{% extends 'single.html.twig' %}
+
+{% block title %}{{ parent() }} Catégorie{% endblock %}
+
+{% block single_header %}
+    {{ include('structure/_breadcrum.html.twig',
+        {
+            'domaine': 'Catégorie',
+            'action' : 'Consultation',
+            'listeUrl':'category_index'
+        }) }}
+{% endblock %}
+
+{% block single_body %}
+    <div class="row justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        {{ category.name }}
+                    </div>
+                </div>
+                <div class="card-body">
+                    {{ category.content | raw }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}
