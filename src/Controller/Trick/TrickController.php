@@ -17,6 +17,18 @@ class TrickController extends AbstractController
 {
 
     /**
+     * @Route("/{slug}", name="trick_show", methods={"GET"})
+     *
+     * @param Trick $trick
+     * @return Response
+     */
+    public function showAction(Trick $trick): Response
+    {
+        return $this->render('trick/show.html.twig', [
+            'trick' => $trick,
+        ]);
+    }
+          
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      * @param Request $request
      * @param TrickManager $manager
