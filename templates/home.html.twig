@@ -20,7 +20,8 @@
                             </h3>
 
                             <p class="subtitle-a">
-                                SnowTricks est un site communautaire ayant pour objectif de partager les ressources autour
+                                SnowTricks est un site communautaire ayant pour objectif de partager les ressources
+                                autour
                                 des figures du snowboard.
                             </p>
                             <p class="subtitle-a">
@@ -40,17 +41,20 @@
 
                     {% for trick in tricks %}
 
-                        <section class="bloc_{{ section }} col-sm-12 col-md-4 col-lg-3 col-xl-2 m-3 {{ (loop.index > nbr_row * nbr_article_by_row) ?'d-none':''}}">
+                        <section
+                                class="bloc_{{ section }} col-sm-12 col-md-4 col-lg-3 col-xl-2 m-3 {{ (loop.index > nbr_row * nbr_article_by_row) ?'d-none':'' }}">
 
                             {{ include('/trick/_card_mini.html.twig') }}
-                            
+
                         </section>
                         {% if (loop.index % nbr_article_by_row   ==0) %}
-                        {% set section= loop.index / nbr_article_by_row %}
+                            {% set section= loop.index / nbr_article_by_row %}
                             {% if loop.index>=nbr_row * nbr_article_by_row %}
-                                <div id="btn_{{ section  }}" class="bloc_{{ section -1 }}  col-sm-1 m-5 {{ (loop.index > nbr_row * nbr_article_by_row) ?'d-none':''}}">
+                                <div id="btn_{{ section }}"
+                                     class="bloc_{{ section -1 }}  col-sm-1 m-5 {{ (loop.index > nbr_row * nbr_article_by_row) ?'d-none':'' }}">
                                     <button class="btn btn-primary mr-3"
-                                            onclick="$('#btn_{{ section }}').remove(); $('.bloc_{{ section }}').removeClass('d-none'); ">Voir plus
+                                            onclick="$('#btn_{{ section }}').remove(); $('.bloc_{{ section }}').removeClass('d-none'); ">
+                                        Voir plus
                                     </button>
                                 </div>
                             {% endif %}
