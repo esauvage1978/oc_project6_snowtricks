@@ -4,7 +4,7 @@
         <div class="bg-image"
              style="height:100px;  background-image: url({{ absolute_url( asset('/img/fond_snowtricks.jpg')) }})">
         </div>
-        <div class="content-wrapper mt-5">
+        <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
@@ -14,7 +14,7 @@
                 </div>
             </div>
 
-            <section class="content " id="section_body">
+            <section class="content mb-5" id="section_body">
                 <div class="container-fluid ">
 
                     {{ include('structure/_show_alert.html.twig') }}
@@ -26,3 +26,4 @@
             </section>
         </div>
     {% endblock %}
+

@@ -1,0 +1,39 @@
+<div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+    {{ form_start(form) }}
+    <div class="card ">
+
+        <div class="card-body">
+            <div class="form-group row">
+                {{ form_label(form.name,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+                <div class="col">
+                    {{ form_widget(form.name) }}
+                </div>
+            </div>
+
+            {{ form_row(form.content) }}
+        </div>
+
+        <div class="card-footer">
+            <div class="row">
+                <div class="col  d-flex justify-content-between align-items-center">
+
+                    <button class="btn btn-success " name="valid" id="valid">
+                        <i class="fas fa-save"></i> {{ btn | default('Enregistrer') }}
+                    </button>
+
+                    {% if category.id != "" %}
+                        <span class="btn btn-danger " onclick="$('#delete').click();">
+                            <i class="fas fa-trash"></i> Supprimer
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-none">
+        {{ form_rest(form) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+
+
