@@ -30,6 +30,7 @@
                     </div>
                     <div class="centered">{{ trick.name }}</div>
                 </div>
+                {{  include ('trick/_show_media.html.twig') }}
                 <div class="card-body">
                     {{ trick.content | raw }}
                 </div>

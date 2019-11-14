@@ -48,6 +48,11 @@ class TrickManager
             $trick->setModifyAt(new \DateTime());
         }
 
+        foreach ($trick->getVideos() as $video)
+        {
+            $video->setTrick($trick);
+        }
+
         $trick->setSlug(
             Slugger::slugify($trick->getName())
         );
