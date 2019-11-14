@@ -1,6 +1,6 @@
 <div class="post">
     <div class="user-block">
-        <img class="img-circle img-bordered-sm" src="{{ absolute_url( asset('/img/avatar.png')) }}" alt="user image">
+        <img class="img-circle img-bordered-sm" src="{{ comment.user.avatar.image }}" alt="user image">
         <span class="username">
           <a href="{{ path('user_show',{'id':comment.user.id}) }}">{{ comment.user.username }}</a>
         </span>
