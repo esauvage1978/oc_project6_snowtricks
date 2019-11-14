@@ -75,6 +75,7 @@ class UserFixtures extends Fixture
     private function checkAndPersist(ObjectManager $manager, User $instance)
     {
         $this->userManager->encodePassword($instance);
+        $this->userManager->initialiseAvatar($instance);
         if ($this->validator->isValid($instance)) {
             $manager->persist($instance);
         } else {
