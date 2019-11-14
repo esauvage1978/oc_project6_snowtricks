@@ -2,7 +2,10 @@
 
 namespace App\Form\Trick;
 
+use App\Entity\Category;
 use App\Entity\Trick;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,7 +26,20 @@ class TrickType extends AbstractType
                 'label' => 'Description',
                 'attr' => ['class' => 'textarea'],
                 'required' => true,
-            ]);
+            ])
+            ->add('categories', EntityType::class, [
+                'class' => Category::class,
+                'label'=> 'Catégories',
+                'choice_label' => 'name',
+                'multiple' => true,
+                'attr' => ['class' => 'select2'],
+                'required' => false,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ])
+            ;
     }
 
     /**

@@ -30,7 +30,7 @@ class TrickManager
     {
         $this->initialise($trick);
 
-        if (!$this->validator->isValide($trick)) {
+        if (!$this->validator->isValid($trick)) {
             return false;
         }
 
