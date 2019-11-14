@@ -35,11 +35,13 @@
                 </div>
 
                 <div class="card-footer text-muted text-center">
-                    <span class="badge badge-info">Publié le : {{ trick.createAt | date('d-m-Y') }}</span>
+                    <span class="badge badge-info">Publié le {{ trick.createAt | date('d-m-Y') }}</span>
                     {% if trick.modifyAt %}
-                        <span class="badge badge-info">Mis à jour : {{ trick.modifyAt | date('d-m-Y') }}</span>
+                        <span class="badge badge-info">Mis à jour le {{ trick.modifyAt | date('d-m-Y') }}</span>
                     {% endif %}
-
+                    {% for category in trick.categories %}
+                        {{ include('category/_show_btn.html.twig') }}
+                    {% endfor %}
                 </div>
 
             </article>
@@ -90,7 +92,10 @@
         }) }}
     </div>
 {% endblock %}
-
-
-
-
+{% block javascripts %}
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+    </script>
+{% endblock %}

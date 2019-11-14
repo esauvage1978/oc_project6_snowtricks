@@ -27,6 +27,21 @@
             </div>
 
         </div>
-
+        <div class="col-sm-12 col-md-4">
+            <div class="card">
+                <div class="card-footer">
+                    Figures
+                </div>
+                <div class="list-group list-group-flush dropright">
+                    {% for trick in category.tricks %}
+                        {{ include('trick/_show_list_group_item.html.twig') }}
+                    {% else %}
+                        <div class="list-group-item">
+                            <a class="text-success" href="{{ path('trick_new') }}">Ajouter une figure</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

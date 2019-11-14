@@ -23,6 +23,7 @@
                             <th class="all">#</th>
                             <th class="all">Nom de la catégorie</th>
                             <th class="desktop">Description</th>
+                            <th class="desktop">Figures</th>
                             <th class="all text-center"></th>
                         </tr>
                         </thead>
@@ -35,6 +36,13 @@
                                 </td>
                                 <td>
                                     {{ category.content | raw }}
+                                </td>
+                                <td class="text-center">
+                                    {% if   category.tricks.count==0 %}
+                                        <span class="text-light"><i class="fas fa-circle"></i></span>
+                                    {% else %}
+                                        <small class="badge badge-info">{{ category.tricks.count }}</small>
+                                    {% endif %}
                                 </td>
                                 <td class=" d-flex  justify-content-end ">
 
