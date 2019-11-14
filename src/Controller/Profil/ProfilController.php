@@ -59,10 +59,13 @@ class ProfilController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() ) {
-            if ($userManager->checkOldPassword($user, $form->getData()['plainPasswordOld'])) {
+
+            $formData = $form->getData();
+
+            if ($userManager->checkOldPassword($user, $formData['plainPasswordOld'])) {
                 if ($userManager->checkPasswordConfirmation($user,
-                        $form->getData()['plainPassword'],
-                        $form->getData()['plainPasswordConfirmation']) && $userManager->update($user)) {
+                        $formData['plainPassword'],
+                        $formData['plainPasswordConfirmation']) && $userManager->update($user)) {
                     $this->addFlash('success', 'Votre mot de passe à bien été modifié !');
 
                     return $this->redirectToRoute('profil_home');
