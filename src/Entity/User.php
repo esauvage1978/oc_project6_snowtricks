@@ -52,12 +52,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="boolean")
      */
-    private $validate;
+    private $emailValidated;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $validate_token;
+    private $emailValidatedToken;
 
     public function __construct()
     {
@@ -174,26 +174,27 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getValidate(): ?bool
+
+    public function getEmailValidated(): ?bool
     {
-        return $this->validate;
+        return $this->emailValidated;
     }
 
-    public function setValidate(bool $validate): self
+    public function setEmailValidated(bool $emailValidated): self
     {
-        $this->validate = $validate;
+        $this->emailValidated = $emailValidated;
 
         return $this;
     }
 
-    public function getValidateToken(): ?string
+    public function getEmailValidatedToken(): ?string
     {
-        return $this->validate_token;
+        return $this->emailValidatedToken;
     }
 
-    public function setValidateToken(string $validate_token): self
+    public function setEmailValidatedToken(?string $emailValidatedToken): self
     {
-        $this->validate_token = $validate_token;
+        $this->emailValidatedToken = $emailValidatedToken;
 
         return $this;
     }

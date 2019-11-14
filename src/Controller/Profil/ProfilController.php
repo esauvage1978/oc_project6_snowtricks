@@ -48,7 +48,7 @@ class ProfilController extends AbstractController
     }
 
     /**
-     * @Route("/profil/sendmailvalidate", methods={"GET"}, name="profil_sendmailvalidate")
+     * @Route("/profil/sendmail/emailvalidated", methods={"GET"}, name="profil_sendmail_email_validated")
      * @param UserSendmail $mail
      * @return Response
      */

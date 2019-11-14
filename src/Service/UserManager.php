@@ -49,10 +49,10 @@ class UserManager
 
     public function initialiseUser(User $user)
     {
-        if (empty($user->getValidateToken())) {
+        if (empty($user->getEmailValidatedToken())) {
             $user
-                    ->setValidate(false)
-                    ->setValidateToken(md5(random_bytes(50)));
+                    ->setEmailValidated(false)
+                    ->setEmailValidatedToken(md5(random_bytes(50)));
         }
 
         $this->encodePassword($user);
