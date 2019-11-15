@@ -119,4 +119,20 @@ class UserManager
     {
         $user->setPasswordForgetToken(md5(random_bytes(50)));
     }
+
+    public function checkPasswordConfirmation(User $user,string $newpwd, string $confirmation): bool
+    {
+        $user->setPlainPassword($newpwd);
+        return $newpwd === $confirmation;
+    }
+
+    public function initialisePasswordRecover(User $user, string $plainPassword, string $plainPasswordConfirmation):bool
+    {
+        if (!$this->checkPasswordConfirmation($user,$plainPassword ,$plainPasswordConfirmation)) {
+            return false;
+        }
+        $user->setPasswordForgetToken(date_format(new DateTime(), 'Y-m-d H:i:s'));
+        $user->setPlainPassword($plainPassword);
+        return true;
+    }
 }

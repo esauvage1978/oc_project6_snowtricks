@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Event\UserPasswordForgetEvent;
 use App\Event\UserRegistrationEvent;
 use App\Form\User\PasswordForgetFormType;
+use App\Form\User\PasswordRecoverFormType;
 use App\Form\User\RegistrerType;
 use App\Form\User\UserEditType;
 use App\Form\User\UserType;
@@ -121,14 +122,47 @@ class UserController extends AbstractController
     /**
      * @route("/password/recover/{token}", name="user_password_recover", methods={"GET","POST"})
      *
-     * @Route("/{slug}", name="", methods={"GET","POST"})
+     * @param Request $request
+     * @param string $token
+     * @param UserRepository $userRepository
+     * @param UserManager $userManager
      *
      * @return Response
      */
     public function userPasswordRecorverction(
+        Request $request,
+        string $token,
+        UserRepository $userRepository,
+        UserManager $userManager
     ): Response
     {
-        return null;
+        $form = $this->createForm(PasswordRecoverFormType::class);
+        $form->handleRequest($request);
+        $user = $userRepository->findOneBy(['passwordForgetToken'=>$token]);
+
+        if (!$user) {
+            $this->addFlash('warning', 'L\'adresse de récupération du mot de passe est incorrecte !');
+            return $this->redirectToRoute('home');
+        }
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+
+            if ($userManager->initialisePasswordRecover($user,
+                $formData['plainPassword'],
+                $formData['plainPasswordConfirmation']) &&
+
+            $userManager->update($user)) {
+                $this->addFlash('success', 'Votre mot de passe est changé. Vous pouvez vous connecter !');
+
+                return $this->redirectToRoute('home');
+            }
+            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $userManager->getErrors($user));
+
+        }
+
+        return $this->render('user/passwordRecover.html.twig', [
+            'form' => $form->createView(),]);
     }
 
     /**
