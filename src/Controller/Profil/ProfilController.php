@@ -7,6 +7,7 @@ use App\Event\UserRegistrationEvent;
 use App\Form\Profil\ProfilType;
 use App\Form\Profil\RegistrationType;
 use App\Helper\UserSendmail;
+use App\Repository\UserRepository;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -21,13 +22,32 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ProfilController extends AbstractController
 {
     /**
-     * @route("/email/validated", name="profil_email_validated")
+     * @route("/email/validated/{token}", name="profil_email_validated")
+     *
+     * @param string $token
+     * @param UserRepository $userRepository
+     * @param UserManager $userManager
      * @return Response
-     * @IsGranted("ROLE_USER")
      */
-    public function profilEmailValidatedAction(Request $request): Response
-    {
-    }
+    public function profilEmailValidatedAction(string $token,UserRepository $userRepository, UserManager $userManager): Response
+   {
+       $user = $userRepository->findOneBy(['emailValidatedToken'=>$token]);
+
+       if (null===$user) {
+           $this->addFlash('warning', 'L\'adresse d\'activation est incorrecte!');
+       } else {
+           $userManager->active($user);
+
+           if ($userManager->update($user)) {
+               $this->addFlash('success', 'Votre compte est activé. Vous pouvez vous connecter!');
+           } else {
+               $this->addFlash('danger', 'Echec de la mise à jour' . $userManager->getErrors($user));
+           }
+       }
+
+       return $this->redirectToRoute('home');
+   }
+
     /**
      * @Route("/", name="profil_home")
      *
