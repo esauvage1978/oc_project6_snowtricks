@@ -30,7 +30,7 @@ class UserLoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if (!$user->getEmailValidated()) {
-            return $this->sendmail->send($user, $this->sendmail::VALIDATE);
+            return $this->sendmail->send($user, $this->sendmail::LOGIN);
         }
 
         return null;

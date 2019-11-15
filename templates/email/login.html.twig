@@ -1,7 +1,7 @@
-﻿Bonjour {{ user.username }},
+Bonjour {{ user.username }},
 <br/><br/>
-Vous venez de demander le mail d'activation de votre compte.
-Merci de l'activer en cliaquant sur le lien <a
+Vous venez de vous connecter sur notre site.
+Cependant votre adresse mail n'est pas encore validée, merci de l'activer en cliaquant sur le lien <a
         href="{{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}">cliquez-ici</a> ou
 collez le lien suivant dans votre navigateur {{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}
 <br/><br/>

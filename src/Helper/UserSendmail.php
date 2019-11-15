@@ -10,7 +10,9 @@ use Twig\Environment;
 
 class UserSendmail
 {
+    const LOGIN = 'login';
     const VALIDATE = 'validate';
+    const REGISTRATION = 'register';
 
     /**
      * @var Environment

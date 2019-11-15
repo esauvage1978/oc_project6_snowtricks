@@ -27,6 +27,9 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    App\Subscriber\:
+        resource: '../src/Subscriber/*'
+        public: true
 
     App\Listener\ImageUploadListener:
         arguments:
@@ -39,4 +42,5 @@ services:
         public: true
         tags:
             - { name: 'kernel.event_listener', event: 'security.interactive_login' }
+
 
