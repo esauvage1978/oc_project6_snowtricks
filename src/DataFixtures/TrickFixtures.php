@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Service\TrickManager;
 use App\Validator\TrickValidator;
@@ -141,9 +142,16 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $instance = $this->initialise(new Trick(), self::DATA[$i]);
 
             $this->checkAndPersist($manager, $instance);
+
+            $this->saveReference($instance, $i);
         }
 
         $manager->flush();
+    }
+
+    private function saveReference(Trick $trick, int $i)
+    {
+        $this->addReference('trick-' . $i, $trick);
     }
 
     private function checkAndPersist(ObjectManager $manager, Trick $instance)
@@ -175,6 +183,8 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies()
     {
-        return [CategoryFixtures::class];
+        return [
+            CategoryFixtures::class
+        ];
     }
 }

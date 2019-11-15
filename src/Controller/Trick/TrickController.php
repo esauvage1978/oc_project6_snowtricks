@@ -8,6 +8,7 @@ use App\Form\Trick\CommentType;
 use App\Form\Trick\TrickType;
 use App\Repository\CommentRepository;
 use App\Service\CommentManager;
+use App\Service\CommentPaginate;
 use App\Service\TrickManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,7 +50,7 @@ class TrickController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}", name="trick_show", methods={"GET","POST"})
+     * @Route("/{slug}/{page?<\d+>1}", name="trick_show", methods={"GET","POST"})
      *
      * @param Request $request
      * @param Trick $trick
@@ -61,11 +62,21 @@ class TrickController extends AbstractController
         Request $request,
         Trick $trick,
         CommentManager $commentManager,
-        CommentRepository $commentRepository
+        CommentPaginate $commentPaginate,
+        $page = 1
     ): Response
     {
+        $commentPaginate->initialise($trick);
 
-        $comments = $commentRepository->findBy(['trick'=>$trick]);
+        $page=$commentPaginate->checkPage($page);
+
+        $nbrPages=$commentPaginate->getNbrSheets();
+
+        if ($page > $nbrPages ) {
+            $page = $nbrPages;
+        }
+
+        $comments=$commentPaginate->getCommentsForPage($page);
 
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment);
@@ -87,7 +98,9 @@ class TrickController extends AbstractController
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
             'form' => $formComment->createView(),
-            'comments' => $comments
+            'comments' => $comments,
+            'nbrPages' => $nbrPages,
+            'currentPage' => $page,
         ]);
     }
 
