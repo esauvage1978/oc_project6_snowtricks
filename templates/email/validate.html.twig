@@ -1,0 +1,8 @@
+﻿Bonjour {{ user.username }},
+<br/><br/>
+Vous venez de demander le mail d'activation de votre compte.
+Merci de l'activer en cliaquant sur le lien <a
+        href="{{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}">cliquez-ici</a> ou
+collez le lien suivant dans votre navigateur {{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}
+<br/><br/>
+Merci d'utiliser SNOWTRICKS et à bientôt

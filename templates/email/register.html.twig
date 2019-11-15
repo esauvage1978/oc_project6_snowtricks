@@ -1,0 +1,8 @@
+﻿Bonjour {{ user.username }},
+<br/><br/>
+Vous vous êtes récemment inscrit sur notre site.
+Afin de finaliser l'inscription et de valider votre compte, <a
+        href="{{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}">cliquez-ici</a> ou
+collez le lien suivant dans votre navigateur {{ url('profil_email_validated', {'token': user.emailValidatedToken}) }}
+<br/><br/>
+Merci d'utiliser SNOWTRICKS et à bientôt

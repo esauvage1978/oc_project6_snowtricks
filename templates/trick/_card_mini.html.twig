@@ -1,6 +1,6 @@
 <article class="card">
     <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
-        <img src="{{ absolute_url(asset('/img/trick_default.jpg')) }}" alt=""
+        <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt=""
              class="card-img-top">
     </a>
     <div class="card-body">

@@ -21,16 +21,27 @@
                 <div class="card-body box-profile">
                     <div class="text-center">
                         <img class="profile-user-img img-fluid img-circle"
-                             src="{{ absolute_url( asset('/img/avatar.png')) }}"
+                             src="{{ user.avatar.image | raw }}"
                              alt="User profile picture">
                     </div>
-
                     <h3 class="profile-username text-center">{{ user.username }}</h3>
 
                     <p class="text-muted text-center">{{ user.email }}</p>
                 </div>
             </article>
-
+            {% if app.user.emailvalidated == false %}
+                <div class="alert alert-danger alert-dismissible mt-2">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Adresse mail non vérifiée !</h5>
+                    <p>
+                        Attention votre adresse mail n'a pas encore été vérifiée.
+                    </p>
+                    <p>
+                        <a href="{{ path('profil_sendmail_email_validated') }}">Cliquer ici</a> pour renvoyer le lien de
+                        vérification.
+                    </p>
+                </div>
+            {% endif %}
             {{ form_start(form) }}
             <article class="card mt-2 ">
 
@@ -63,6 +74,17 @@
                 </div>
             </article>
             {{ form_end(form) }}
+
+            <div class="row mt-5">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <h5>
+                        <a id="forget"
+                           href="{{ path('profil_avatar') }}" title="Changer d'avatar">
+                            Changer d'avatar
+                        </a>
+                    </h5>
+                </div>
+            </div>
         </section>
         <aside class="col-sm-12 col-md-4">
             <article class="card">
