@@ -1,7 +1,14 @@
 $(document).ready(function() {
 
     var $container = $('div#trick-media');
+    var image_index = $container.find('img').length;
     var video_index = $container.find('iframe').length;
+
+    $('#add-image').click(function(e) {
+        addItem('image');
+        e.preventDefault();
+        return false;
+    });
 
     $('#add-video').click(function(e) {
         addItem('video');
@@ -10,9 +17,13 @@ $(document).ready(function() {
     });
 
     function addItem(type) {
-
-        index = video_index;
-        video_index++;
+        if(type == 'image') {
+            index = image_index;
+            image_index++;
+        } else {
+            index = video_index;
+            video_index++;
+        }
 
         var $container = $('#media-add-'+type);
         var template = $container.attr('data-prototype')
@@ -50,5 +61,8 @@ $(document).ready(function() {
         $('#'+media_id).get(0).type = 'text';
     })
 
-
+    $(".image-pop").on("click", function() {
+        $('#imagepreview').attr('src', $(this).attr('src'));
+        $('#imagemodal').modal('show');
+    });
 });

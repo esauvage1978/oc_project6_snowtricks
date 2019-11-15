@@ -4,6 +4,7 @@ namespace App\Form\Trick;
 
 use App\Entity\Category;
 use App\Entity\Trick;
+use App\Form\Trick\ImageType;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -43,7 +44,12 @@ class TrickType extends AbstractType
                 'entry_type' => VideoType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-            ]);
+            ])
+            ->add('images', CollectionType::class, [
+                'entry_type'    => ImageType::class,
+                'allow_add'     => true,
+                'allow_delete'  => true
+            ])        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,4 +1,4 @@
-{% if not trick.videos.empty %}
+{% if not trick.images.empty or not trick.videos.empty %}
     <div class="d-block d-sm-none text-center">
         <button class="btn btn-info mt-4"
                 onclick="this.remove(); $('.scrollgallery').removeClass('d-none');">Voir les médias
@@ -34,19 +34,42 @@
                 </div>
             </div>
         {% endfor %}
+        {% for image in trick.images %}
+            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
+                <div class="card  " id="media-{{ image.name }}">
+                    <img class="card-img-top image-pop" src="{{ asset(image.url) }}"
+                         alt="Card image cap"
+                    >
+                    <div class="bottom-right">
+
+                        <button class="media-delete btn btn-danger "
+                                data-msg="figure_images_{{ loop.index0 }}"
+                                data-media="{{ image.name }}"><i
+                                    class="fas fa-trash"></i></button>
+
+                    </div>
+
+                    <div class="card-footer ">{{ form_widget(form.images[loop.index0]) }}</div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
 <div class="card-footer">
     <div id="trick-media-new">
         <div class="row">
+            <div class="col-xl-6 media-add" id="media-add-image"
+                 data-prototype="{{ form_row(form.images.vars.prototype) | e('html_attr') }}"></div>
             <div class="col-xl-6 media-add" id="media-add-video"
                  data-prototype="{{ form_row(form.videos.vars.prototype) | e('html_attr') }}"></div>
         </div>
     </div>
 
     <div class="pt-4 pb-3">
+        <a href="#" id="add-image" class="btn btn-dark">Ajouter une image</a>
         <a href="#" id="add-video" class="btn btn-dark">Ajouter une video</a>
     </div>
 
+    <hr>
 </div>
