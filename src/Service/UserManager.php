@@ -108,6 +108,13 @@ class UserManager
         $this->manager->flush();
     }
 
+
+
+    public function checkOldPassword(User $user, string $oldpwd): bool
+    {
+        return $this->passwordEncoder->isPasswordValid($user, $oldpwd);
+    }
+  
     public function active(User $user)
     {
         $user->setEmailValidated(true);
@@ -118,6 +125,7 @@ class UserManager
     public function initialisePasswordForget(User $user)
     {
         $user->setPasswordForgetToken(md5(random_bytes(50)));
+
     }
 
     public function checkPasswordConfirmation(User $user,string $newpwd, string $confirmation): bool
@@ -125,6 +133,7 @@ class UserManager
         $user->setPlainPassword($newpwd);
         return $newpwd === $confirmation;
     }
+
 
     public function initialisePasswordRecover(User $user, string $plainPassword, string $plainPasswordConfirmation):bool
     {
@@ -135,4 +144,5 @@ class UserManager
         $user->setPlainPassword($plainPassword);
         return true;
     }
+
 }
