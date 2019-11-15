@@ -40,7 +40,6 @@ class UserManager
     {
         $this->initialiseUser($user);
 
-
         if (!$this->validator->isValid($user)) {
             return false;
         }
@@ -53,6 +52,12 @@ class UserManager
 
     public function initialiseUser(User $user)
     {
+        if (empty($user->getEmailValidatedToken())) {
+            $user
+                    ->setEmailValidated(false)
+                    ->setEmailValidatedToken(md5(random_bytes(50)));
+        }
+
         $this->encodePassword($user);
 
         $this->initialiseAvatar($user);
@@ -91,20 +96,14 @@ class UserManager
         }
     }
 
-
     public function getErrors(User $entity)
     {
         return $this->validator->getErrors($entity);
     }
 
-
-    /**
-     * @param User $user
-     */
     public function remove(User $user)
     {
         $this->manager->remove($user);
         $this->manager->flush();
     }
-
 }

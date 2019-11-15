@@ -160,6 +160,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             ->setName($data['name'])
             ->setContent($data['content'])
             ->setCreateAt($this->faker->dateTimeBetween('-6 months'));
+
         for ($i = 0; $i < mt_rand(2, 6); $i++) {
 
             $instance->addCategory($this->getReference(
@@ -168,6 +169,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
                 )));
 
         }
+
         return $instance;
     }
 

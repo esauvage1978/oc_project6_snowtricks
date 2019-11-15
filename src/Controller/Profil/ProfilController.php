@@ -3,6 +3,7 @@
 namespace App\Controller\Profil;
 
 use App\Form\Profil\ProfilType;
+use App\Helper\UserSendmail;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,5 +76,19 @@ class ProfilController extends AbstractController
         $response->headers->set('Content-Type', 'application/json');
 
         return $response;
+    }
+  
+    /**
+     * @Route("/profil/sendmail/emailvalidated", methods={"GET"}, name="profil_sendmail_email_validated")
+     * @param UserSendmail $mail
+     * @return Response
+     */
+    public function sendmailActivationAction(UserSendMail $mail): Response
+    {
+        $user=$this->getUser();
+        $mail->send($user,UserSendmail::VALIDATE);
+        $this->addFlash('success', 'Le mail est envoyé, merci de consulter votre messagerie.');
+        return $this->redirectToRoute('profil_home');
+
     }
 }
