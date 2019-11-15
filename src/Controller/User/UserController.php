@@ -4,11 +4,14 @@
 namespace App\Controller\User;
 
 use App\Entity\User;
+use App\Event\UserRegistrationEvent;
+use App\Form\User\RegistrerType;
 use App\Form\User\UserEditType;
 use App\Form\User\UserType;
 use App\Repository\UserRepository;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,6 +45,40 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/registrer", name="user_registrer", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param UserManager $manager
+     * @param EventDispatcherInterface $dispatcher
+     *
+     * @return Response
+     */
+    public function registrationAction(Request $request, UserManager $manager, EventDispatcherInterface $dispatcher): Response
+    {
+        $user=new User();
+        $form = $this->createForm(RegistrerType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($manager->update($user)) {
+                $this->addFlash('success', 'Création de l\'utilisateur effectuée. Un mail de validation du compte vous a été envoyé');
+
+                $event = new UserRegistrationEvent($user);
+                $dispatcher->dispatch($event,UserRegistrationEvent::NAME);
+
+                return $this->redirectToRoute('home');
+            }
+            $this->addFlash('danger', 'La création a echoué. En voici les raisons : ' . $manager->getErrors($user));
+        }
+
+        return $this->render('user/registrer.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

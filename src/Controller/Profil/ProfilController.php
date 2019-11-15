@@ -2,10 +2,14 @@
 
 namespace App\Controller\Profil;
 
+use App\Entity\User;
+use App\Event\UserRegistrationEvent;
 use App\Form\Profil\ProfilType;
+use App\Form\Profil\RegistrationType;
 use App\Helper\UserSendmail;
 use App\Service\UserManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,11 +17,17 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/profil")
- * @IsGranted("ROLE_USER")
  */
 class ProfilController extends AbstractController
 {
-
+    /**
+     * @route("/email/validated", name="profil_email_validated")
+     * @return Response
+     * @IsGranted("ROLE_USER")
+     */
+    public function profilEmailValidatedAction(Request $request): Response
+    {
+    }
     /**
      * @Route("/", name="profil_home")
      *
@@ -25,7 +35,7 @@ class ProfilController extends AbstractController
      * @var UserManager $userManager
      *
      * @return Response
-     *
+     * @IsGranted("ROLE_USER")
      */
     public function profilHomeAction(Request $request,  UserManager $manager): Response
     {
@@ -51,14 +61,20 @@ class ProfilController extends AbstractController
      * @Route("/avatar", name="profil_avatar")
      *
      * @return Response
+     *
+     * @IsGranted("ROLE_USER")
      */
-    public function showAction(): Response
+    public function avatarAction(): Response
     {
         return $this->render('profil/avatar.html.twig');
     }
 
+
+
     /**
      * @Route("/avatar/update", name="profil_avatar_update")
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function ajaxAction(Request $request, UserManager $userManager)
     {
@@ -82,6 +98,8 @@ class ProfilController extends AbstractController
      * @Route("/profil/sendmail/emailvalidated", methods={"GET"}, name="profil_sendmail_email_validated")
      * @param UserSendmail $mail
      * @return Response
+     *
+     * @IsGranted("ROLE_USER")
      */
     public function sendmailActivationAction(UserSendMail $mail): Response
     {
