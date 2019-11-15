@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Entity\Avatar;
 use App\Entity\User;
 use App\Validator\UserValidator;
+use DateTime;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -105,5 +106,12 @@ class UserManager
     {
         $this->manager->remove($user);
         $this->manager->flush();
+    }
+
+    public function active(User $user)
+    {
+        $user->setEmailValidated(true);
+        $user->setEmailValidatedToken(date_format(new DateTime(), 'Y-m-d H:i:s'));
+        $user->setRoles(array_merge($user->getRoles(),['ROLE_USER']));
     }
 }
