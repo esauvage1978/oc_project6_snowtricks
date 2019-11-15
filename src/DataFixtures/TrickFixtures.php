@@ -6,20 +6,21 @@ use App\Entity\Trick;
 use App\Service\TrickManager;
 use App\Validator\TrickValidator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
-class TrickFixtures extends Fixture
+class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
     const DATA =
         [
             [
                 'name' => 'Rotation frontside et backside',
-                'content' => '<p>Un snowboarder peut faire des rotations déclenchées du côté de ses pointes de pied,
-                    en frontside ou de ses talons, en backside. On parle aussi de frontside et backside pour les murs
-                     de halfpipe et les hips.<p></p> Les rotations vont du demi-tour en 180 degrés jusqu\'à des
-                      1800 degrés, soit cinq tours !</p>',
+                'content' => '<p>Un snowboarder peut faire des rotations déclenchées du côté de ses pointes de pied, '
+                    . 'en <b>frontside </b>ou de ses talons, en <b>backside</b>. On parle aussi de frontside'
+                    . ' et backside pour les murs de halfpipe et les hips.</p><p> Les rotations vont du demi-tour'
+                    . ' en <b>180 degrés</b> jusqu\'à des <b>1800 degrés</b>, soit cinq tours !</p>',
             ],
             [
                 'name' => 'Switch',
@@ -160,6 +161,20 @@ class TrickFixtures extends Fixture
             ->setContent($data['content'])
             ->setCreateAt($this->faker->dateTimeBetween('-6 months'));
 
+        for ($i = 0; $i < mt_rand(2, 6); $i++) {
+
+            $instance->addCategory($this->getReference(
+                'category-' . mt_rand(0,
+                    count(CategoryFixtures::DATA)-1
+                )));
+
+        }
+
         return $instance;
+    }
+
+    public function getDependencies()
+    {
+        return [CategoryFixtures::class];
     }
 }
