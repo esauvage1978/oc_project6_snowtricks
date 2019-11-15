@@ -114,4 +114,9 @@ class UserManager
         $user->setEmailValidatedToken(date_format(new DateTime(), 'Y-m-d H:i:s'));
         $user->setRoles(array_merge($user->getRoles(),['ROLE_USER']));
     }
+
+    public function initialisePasswordForget(User $user)
+    {
+        $user->setPasswordForgetToken(md5(random_bytes(50)));
+    }
 }

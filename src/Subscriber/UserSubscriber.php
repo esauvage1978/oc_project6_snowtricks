@@ -2,6 +2,7 @@
 
 namespace App\Subscriber;
 
+use App\Event\UserPasswordForgetEvent;
 use App\Event\UserRegistrationEvent;
 use App\Helper\UserSendmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,7 +25,8 @@ class UserSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            UserRegistrationEvent::NAME => 'onUserRegistration'
+            UserRegistrationEvent::NAME => 'onUserRegistration',
+            UserPasswordForgetEvent::NAME => 'onUserPasswordForget'
         ];
     }
 
@@ -37,4 +39,12 @@ class UserSubscriber implements EventSubscriberInterface
         return $this->sendmail->send($event->getUser(), $this->sendmail::REGISTRATION);
     }
 
+    /**
+     * @param UserPasswordForgetEvent $event
+     * @return int
+     */
+    public function onUserPasswordForget(UserPasswordForgetEvent $event): int
+    {
+        return $this->sendmail->send($event->getUser(), $this->sendmail::PASSWORDFORGET);
+    }
 }
