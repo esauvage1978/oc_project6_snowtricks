@@ -4,6 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    mailer.mail: 'emmanuel.sauvage@live.fr'
+    mailer.name: '[ SNOWTRICKS ] Manu '
 
 services:
     # default configuration for services in *this* file
@@ -23,5 +25,7 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Listener\UserLoginListener:
+        public: true
+        tags:
+            - { name: 'kernel.event_listener', event: 'security.interactive_login' }

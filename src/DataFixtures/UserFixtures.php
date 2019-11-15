@@ -74,13 +74,14 @@ class UserFixtures extends Fixture
     }
     private function checkAndPersist(ObjectManager $manager, User $instance)
     {
-        $this->userManager->encodePassword($instance);
+        $this->userManager->initialiseUser($instance);
         if ($this->validator->isValid($instance)) {
             $manager->persist($instance);
         } else {
             var_dump('Validator : ' . $this->validator->getErrors($instance));
         }
     }
+
     private function initialise(User $instance, $data): User
     {
         $instance->setUsername($data['username'])

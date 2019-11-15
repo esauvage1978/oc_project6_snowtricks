@@ -49,6 +49,16 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $emailValidated;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $emailValidatedToken;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -160,6 +170,31 @@ class User implements UserInterface
                 $comment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+
+    public function getEmailValidated(): ?bool
+    {
+        return $this->emailValidated;
+    }
+
+    public function setEmailValidated(bool $emailValidated): self
+    {
+        $this->emailValidated = $emailValidated;
+
+        return $this;
+    }
+
+    public function getEmailValidatedToken(): ?string
+    {
+        return $this->emailValidatedToken;
+    }
+
+    public function setEmailValidatedToken(?string $emailValidatedToken): self
+    {
+        $this->emailValidatedToken = $emailValidatedToken;
 
         return $this;
     }
