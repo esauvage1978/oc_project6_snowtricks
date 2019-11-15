@@ -4,7 +4,9 @@
 namespace App\Controller\User;
 
 use App\Entity\User;
+use App\Event\UserPasswordForgetEvent;
 use App\Event\UserRegistrationEvent;
+use App\Form\User\PasswordForgetFormType;
 use App\Form\User\RegistrerType;
 use App\Form\User\UserEditType;
 use App\Form\User\UserType;
@@ -115,8 +117,57 @@ class UserController extends AbstractController
             'user' => $user,
         ]);
     }
-  
-  
+
+    /**
+     * @route("/password/recover/{token}", name="user_password_recover", methods={"GET","POST"})
+     *
+     * @Route("/{slug}", name="", methods={"GET","POST"})
+     *
+     * @return Response
+     */
+    public function userPasswordRecorverction(
+    ): Response
+    {
+        return null;
+    }
+
+    /**
+     * @Route("/password/forget", name="user_password_forget", methods={"GET","POST"})
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @param UserManager $userManager
+     * @param EventDispatcherInterface $dispatcher
+     *
+     * @return Response
+     */
+    public function passwordForgetAction(Request $request, UserRepository $userRepository, UserManager $userManager, EventDispatcherInterface $dispatcher): Response
+    {
+        $form = $this->createForm(PasswordForgetFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $user = $userRepository->findOneBy(['email'=>$formData['email']]);
+
+            if (null !== $user) {
+                $this->addFlash('success', 'Le mail de récupération du mot de passe est envoyé !');
+
+                $userManager->initialisePasswordForget($user);
+                $userManager->update($user);
+
+                $event = new UserPasswordForgetEvent($user);
+                $dispatcher->dispatch($event, UserPasswordForgetEvent::NAME);
+
+                return $this->redirectToRoute('home');
+            }
+            $this->addFlash('danger', 'L\'utilisateur n\'a pas été trouvé.');
+        }
+
+        return $this->render('user/password_forget.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
     /**
      * @Route("/", name="user_index", methods={"GET"})
      *

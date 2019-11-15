@@ -65,6 +65,11 @@ class User implements UserInterface
      */
     private $emailValidatedToken;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $passwordForgetToken;
+
 
     public function __construct()
     {
@@ -219,6 +224,18 @@ class User implements UserInterface
     {
         $this->emailValidatedToken = $emailValidatedToken;
 
+
+        return $this;
+    }
+
+    public function getPasswordForgetToken(): ?string
+    {
+        return $this->passwordForgetToken;
+    }
+
+    public function setPasswordForgetToken(?string $passwordForgetToken): self
+    {
+        $this->passwordForgetToken = $passwordForgetToken;
 
         return $this;
     }

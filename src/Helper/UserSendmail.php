@@ -13,6 +13,7 @@ class UserSendmail
     const LOGIN = 'login';
     const VALIDATE = 'validate';
     const REGISTRATION = 'register';
+    const PASSWORDFORGET = 'password_forget';
 
     /**
      * @var Environment
