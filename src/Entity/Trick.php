@@ -63,6 +63,11 @@ class Trick
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tricks")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -268,5 +273,17 @@ class Trick
         }
 
         return $path;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }

@@ -73,6 +73,7 @@
                     </div>
                 {% endif %}
 
+                {%  if comments.count > 0 %}
                 <div class="card-body">
                     <ul class="list-unstyled">
                         {% for comment in comments %}
@@ -82,6 +83,7 @@
                     {{ include('trick/_comment_paginate.html.twig') }}
 
                 </div>
+                {% endif %}
             </article>
         </div>
     </div>

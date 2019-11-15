@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Service\TrickManager;
 use App\Validator\TrickValidator;
@@ -167,13 +166,17 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
         $instance
             ->setName($data['name'])
             ->setContent($data['content'])
-            ->setCreateAt($this->faker->dateTimeBetween('-6 months'));
+            ->setCreateAt($this->faker->dateTimeBetween('-6 months'))
+            ->setUser($this->getReference(
+                'user-' . mt_rand(0,
+                    count(UserFixtures::DATA) - 1
+                )));
 
         for ($i = 0; $i < mt_rand(2, 6); $i++) {
 
             $instance->addCategory($this->getReference(
                 'category-' . mt_rand(0,
-                    count(CategoryFixtures::DATA)-1
+                    count(CategoryFixtures::DATA) - 1
                 )));
 
         }
@@ -184,7 +187,8 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies()
     {
         return [
-            CategoryFixtures::class
+            CategoryFixtures::class,
+            UserFixtures::class
         ];
     }
 }

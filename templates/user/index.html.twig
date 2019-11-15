@@ -26,6 +26,7 @@
                             <th class="desktop text-center">Administrateur</th>
                             <th class="desktop text-center">Gestionnaire</th>
                             <th class="desktop text-center">Utilisateur</th>
+                            <th class="desktop">Figures</th>
                             <th class="all text-center"></th>
                         </tr>
                         </thead>
@@ -47,6 +48,13 @@
                                 </td>
                                 <td class="text-center">
                                     <span class="text-{{ 'ROLE_USER' in user.roles ? 'info' : 'light' }} " ><i class="fas fa-circle"></i></span>
+                                </td>
+                                <td class="text-center">
+                                    {% if   user.tricks.count==0 %}
+                                        <span class="text-light"><i class="fas fa-circle"></i></span>
+                                    {% else %}
+                                        <small class="badge badge-info">{{ user.tricks.count }}</small>
+                                    {% endif %}
                                 </td>
                                 <td class=" d-flex  justify-content-end ">
                                     <a class="btn btn-primary btn-sm mr-1"

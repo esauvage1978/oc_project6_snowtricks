@@ -15,20 +15,20 @@ class UserFixtures extends Fixture
 
     CONST DATA = [
         [
-            'username' => 'AppFixtures1',
-            'email' => 'AppFixtures1@live.fr',
+            'username' => 'Paul',
+            'email' => 'paul@live.fr',
             'password' => 'u12345678',
             'roles' => ['ROLE_USER'],
         ],
         [
-            'username' => 'AppFixtures2',
-            'email' => 'AppFixtures2@live.fr',
+            'username' => 'Robert',
+            'email' => 'robert@live.fr',
             'password' => 'u12345678',
             'roles' => ['ROLE_USER'],
         ],
         [
-            'username' => 'AppFixtures3',
-            'email' => 'AppFixtures3@live.fr',
+            'username' => 'Pauline',
+            'email' => 'pauline@live.fr',
             'password' => 'u12345678',
             'roles' => ['ROLE_GESTIONNAIRE'],
         ],
