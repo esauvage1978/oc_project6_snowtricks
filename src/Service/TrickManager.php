@@ -53,6 +53,11 @@ class TrickManager
             $video->setTrick($trick);
         }
 
+        foreach ($trick->getImages() as $image)
+        {
+            $image->setTrick($trick);
+        }
+
         $trick->setSlug(
             Slugger::slugify($trick->getName())
         );

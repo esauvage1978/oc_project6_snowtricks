@@ -1,4 +1,6 @@
-{% if not trick.videos.empty %}
+
+
+ {% if not trick.images.empty or not trick.videos.empty %}
     <div class="d-block d-sm-none text-center">
         <button class="btn btn-info mt-4"
                 onclick="this.remove(); $('.scrollgallery').removeClass('d-none');">Voir les médias
@@ -19,6 +21,16 @@
 
 
                     </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% for image in trick.images %}
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12  col-12">
+                <div class="card  " id="media-{{ image.name }}">
+                    <img class="card-img-top image-pop" src="{{ asset(image.url) }}"
+                         alt="Card image cap"
+                    >
+
                 </div>
             </div>
         {% endfor %}

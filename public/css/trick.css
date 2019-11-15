@@ -66,3 +66,7 @@ div.scrollgallery div {
         column-count: 5;
     }
 }
+
+.custom-file-label::after {
+    content: "Choisir un fichier";
+}

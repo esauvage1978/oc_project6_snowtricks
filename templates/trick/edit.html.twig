@@ -19,8 +19,12 @@
 
     {{ form_start(form) }}
     <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+        <div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
             <article class="card ">
+                <div class="figure-mainimage-container">
+                    <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt="Snow" style="width:100%;">
+                    <div class="centered">{{ trick.name }}</div>
+                </div>
                 {{  include ('trick/_edit_media.html.twig') }}
                 {{  include ('trick/_form.html.twig') }}
                 <div class="card-footer">
@@ -40,12 +44,12 @@
         {{  form_rest(form) }}
 
     {{ form_end(form) }}
-
+    {{ include('trick/_trick_imagemodal.html.twig') }}
 {% endblock %}
 
 
 {% block javascripts %}
-    <script src="{{ absolute_url( asset('js/trick_video.js')) }}"></script>
+    <script src="{{ absolute_url( asset('js/trick_media.js')) }}"></script>
     <script src="{{ absolute_url( asset('plugins/summernote/summernote-bs4.min.js')) }}"></script>
     <script src="{{ absolute_url( asset('plugins/select2/js/select2.full.min.js')) }}"></script>
     <script>
@@ -59,6 +63,11 @@
             });
 
             $('.select2-selection__choice').addClass('bg-light');
+
+            $(document).on('change', '.custom-file-input', function () {
+                let fileName = $(this).val().replace(/\\/g, '/').replace(/.*\//, '');
+                $(this).parent('.custom-file').find('.custom-file-label').text(fileName);
+            });
         })
     </script>
 {% endblock %}
