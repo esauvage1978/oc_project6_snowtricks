@@ -50,6 +50,12 @@ class User implements UserInterface
     private $comments;
 
     /**
+
+     * @ORM\OneToOne(targetEntity="App\Entity\Avatar", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $avatar;
+
+  /**
      * @ORM\Column(type="boolean")
      */
     private $emailValidated;
@@ -58,6 +64,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $emailValidatedToken;
+
 
     public function __construct()
     {
@@ -175,6 +182,22 @@ class User implements UserInterface
     }
 
 
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(Avatar $avatar): self
+    {
+        $this->avatar = $avatar;
+
+        // set the owning side of the relation if necessary
+        if ($avatar->getUser() !== $this) {
+            $avatar->setUser($this);
+        }
+              return $this;
+    }
+
     public function getEmailValidated(): ?bool
     {
         return $this->emailValidated;
@@ -195,6 +218,7 @@ class User implements UserInterface
     public function setEmailValidatedToken(?string $emailValidatedToken): self
     {
         $this->emailValidatedToken = $emailValidatedToken;
+
 
         return $this;
     }

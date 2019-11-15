@@ -48,6 +48,37 @@ class ProfilController extends AbstractController
     }
 
     /**
+     * @Route("/avatar", name="profil_avatar")
+     *
+     * @return Response
+     */
+    public function showAction(): Response
+    {
+        return $this->render('profil/avatar.html.twig');
+    }
+
+    /**
+     * @Route("/avatar/update", name="profil_avatar_update")
+     */
+    public function ajaxAction(Request $request, UserManager $userManager)
+    {
+        $user = $this->getUser();
+
+        /* on récupère la valeur envoyée par la vue */
+        $image = $request->request->get('dataImg');
+
+        $userManager->avatarAdd($user, $image);
+        $userManager->update($user);
+
+        $response = new Response(json_encode([
+            'retour' => 'Avatar mis à jour',
+        ]));
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+  
+    /**
      * @Route("/profil/sendmail/emailvalidated", methods={"GET"}, name="profil_sendmail_email_validated")
      * @param UserSendmail $mail
      * @return Response
@@ -58,5 +89,6 @@ class ProfilController extends AbstractController
         $mail->send($user,UserSendmail::VALIDATE);
         $this->addFlash('success', 'Le mail est envoyé, merci de consulter votre messagerie.');
         return $this->redirectToRoute('profil_home');
+
     }
 }
