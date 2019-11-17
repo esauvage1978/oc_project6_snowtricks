@@ -18,6 +18,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/user")
@@ -30,10 +32,11 @@ class UserController extends AbstractController
      * @param UserManager $manager
      *
      * @return Response
+     * @isGranted("ROLE_ADMIN")
      */
     public function newAction(Request $request, UserManager $manager): Response
     {
-        $user=new User();
+        $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -64,7 +67,7 @@ class UserController extends AbstractController
      */
     public function registrationAction(Request $request, UserManager $manager, EventDispatcherInterface $dispatcher): Response
     {
-        $user=new User();
+        $user = new User();
         $form = $this->createForm(RegistrerType::class, $user);
         $form->handleRequest($request);
 
@@ -74,7 +77,7 @@ class UserController extends AbstractController
                 $this->addFlash('success', 'Création de l\'utilisateur effectuée. Un mail de validation du compte vous a été envoyé');
 
                 $event = new UserRegistrationEvent($user);
-                $dispatcher->dispatch($event,UserRegistrationEvent::NAME);
+                $dispatcher->dispatch($event, UserRegistrationEvent::NAME);
 
                 return $this->redirectToRoute('home');
             }
@@ -94,8 +97,9 @@ class UserController extends AbstractController
      * @param User $user
      * @param UserManager $userManager
      * @return Response
+     * @isGranted("ROLE_ADMIN")
      */
-    public function deleteAction(Request $request, User $user, UserManager $userManager ): Response
+    public function deleteAction(Request $request, User $user, UserManager $userManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
 
@@ -104,8 +108,8 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
-    }  
-      
+    }
+
     /**
      * @Route("/{id}", name="user_show", methods={"GET"})
      *
@@ -138,7 +142,7 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(PasswordRecoverFormType::class);
         $form->handleRequest($request);
-        $user = $userRepository->findOneBy(['passwordForgetToken'=>$token]);
+        $user = $userRepository->findOneBy(['passwordForgetToken' => $token]);
 
         if (!$user) {
             $this->addFlash('warning', 'L\'adresse de récupération du mot de passe est incorrecte !');
@@ -149,10 +153,10 @@ class UserController extends AbstractController
             $formData = $form->getData();
 
             if ($userManager->initialisePasswordRecover($user,
-                $formData['plainPassword'],
-                $formData['plainPasswordConfirmation']) &&
+                    $formData['plainPassword'],
+                    $formData['plainPasswordConfirmation']) &&
 
-            $userManager->update($user)) {
+                $userManager->update($user)) {
                 $this->addFlash('success', 'Votre mot de passe est changé. Vous pouvez vous connecter !');
 
                 return $this->redirectToRoute('home');
@@ -182,7 +186,7 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
-            $user = $userRepository->findOneBy(['email'=>$formData['email']]);
+            $user = $userRepository->findOneBy(['email' => $formData['email']]);
 
             if (null !== $user) {
                 $this->addFlash('success', 'Le mail de récupération du mot de passe est envoyé !');
@@ -202,6 +206,7 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/", name="user_index", methods={"GET"})
      *
@@ -213,20 +218,19 @@ class UserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
-    }      
-          
+    }
 
 
-          
-     /**
+    /**
      * @Route("/{id}/edit", name="user_edit", methods={"GET","POST"})
      * @param Request $request
      * @param UserManager $manager
      * @param User $user
      *
      * @return Response
+     * @isGranted("ROLE_ADMIN")
      */
-    public function editAction(Request $request,User $user, UserManager $manager): Response
+    public function editAction(Request $request, User $user, UserManager $manager): Response
     {
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);

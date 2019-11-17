@@ -7,9 +7,12 @@ use App\Entity\Trick;
 use App\Form\Trick\CommentType;
 use App\Form\Trick\TrickType;
 use App\Repository\CommentRepository;
+use App\Security\TrickVoter;
 use App\Service\CommentManager;
 use App\Service\CommentPaginate;
 use App\Service\TrickManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +24,47 @@ use Symfony\Component\Routing\Annotation\Route;
 class TrickController extends AbstractController
 {
     /**
+     * @Route("/{slug}/edit", name="trick_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Trick $trick
+     * @param TrickManager $manager
+     *
+     * @return Response
+     */
+    public function editAction(Request $request,Trick $trick, TrickManager $manager): Response
+    {
+        $this->denyAccessUnlessGranted(TrickVoter::UPDATE, $trick);
+
+        $form = $this->createForm(TrickType::class, $trick);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($manager->update($trick)) {
+                $this->addFlash('success', 'Modification de la figure effectuée');
+
+                return $this->redirectToRoute('home');
+            }
+            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getError($trick));
+        }
+
+        return $this->render('trick/edit.html.twig', [
+            'trick' => $trick,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/new", name="trick_new", methods={"GET","POST"})
      * @param Request $request
      * @param TrickManager $manager
      *
      * @return Response
+     * @isGranted("ROLE_USER")
      */
     public function newAction(Request $request, TrickManager $manager): Response
     {
+
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -66,6 +102,7 @@ class TrickController extends AbstractController
         $page = 1
     ): Response
     {
+
         $commentPaginate->initialise($trick);
 
         $page=$commentPaginate->checkPage($page);
@@ -104,35 +141,6 @@ class TrickController extends AbstractController
         ]);
     }
 
-      /**
-     * @Route("/{slug}/edit", name="trick_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Trick $trick
-     * @param TrickManager $manager
-     *
-     * @return Response
-     */
-    public function editAction(Request $request,Trick $trick, TrickManager $manager): Response
-    {
-        $form = $this->createForm(TrickType::class, $trick);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if ($manager->update($trick)) {
-                $this->addFlash('success', 'Modification de la figure effectuée');
-
-                return $this->redirectToRoute('home');
-            }
-            $this->addFlash('danger', 'La modification a echoué. En voici les raisons : ' . $manager->getError($trick));
-        }
-
-        return $this->render('trick/edit.html.twig', [
-            'trick' => $trick,
-            'form' => $form->createView(),
-        ]);
-    }
-
     /**
      * @Route("/{id}", name="trick_delete", methods={"DELETE"})
      *
@@ -143,6 +151,8 @@ class TrickController extends AbstractController
      */
     public function deleteAction(Request $request, Trick $trick, TrickManager $trickManager ): Response
     {
+        $this->denyAccessUnlessGranted(TrickVoter::DELETE, $trick);
+
         if ($this->isCsrfTokenValid('delete' . $trick->getId(), $request->request->get('_token'))) {
 
             $this->addFlash('success', 'La figure est supprimée');

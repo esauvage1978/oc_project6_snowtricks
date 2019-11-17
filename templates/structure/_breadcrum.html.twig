@@ -1,5 +1,5 @@
 <div class="col">
-    <h2 class="m-0 text-dark">{{ domaine }} </h2>
+    <h2 class="m-0 {{  '/trick/' in app.request.uri ? 'text-light':'text-dark'}}">{{ domaine }} </h2>
 </div>
 <div class="col">
     <nav aria-label="breadcrumb">

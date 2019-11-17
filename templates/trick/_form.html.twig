@@ -9,12 +9,11 @@
 
     {{ form_row(form.content) }}
 
-        {{ form_row(form.categories) }}
+    {{ form_row(form.categories) }}
 </div>
 <div class="card-footer">
     <div id="trick-media-new">
         <div class="row">
-
             <div class="col-xl-6 media-add" id="media-add-video"
                  data-prototype="{{ form_row(form.videos.vars.prototype) | e('html_attr') }}"></div>
         </div>

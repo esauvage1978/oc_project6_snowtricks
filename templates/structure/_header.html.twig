@@ -17,18 +17,22 @@
                     <a class="nav-link js-scroll " id="home" href="{{ path('home') }}">Page d'accueil</a>
                 </li>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-                           aria-haspopup="true" aria-expanded="false">
-                            Figure
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ path('category_index') }}">Liste des catégories</a>
-                            <a class="dropdown-item" href="{{ path('category_new') }}">Ajouter une catégorie</a>
-                        </div>
-                    </li>
+                    {% if  is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                Figure
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('category_index') }}">Liste des catégories</a>
+                                {% if  is_granted('ROLE_GESTIONNAIRE') %}
+                                    <a class="dropdown-item" href="{{ path('category_new') }}">Ajouter une catégorie</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
@@ -36,7 +40,9 @@
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="{{ path('user_index') }}">Liste</a>
-                            <a class="dropdown-item" href="{{ path('user_new') }}">Ajouter</a>
+                            {% if  is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('user_new') }}">Ajouter</a>
+                            {% endif %}
                         </div>
                     </li>
                     <li class="nav-item dropdown">

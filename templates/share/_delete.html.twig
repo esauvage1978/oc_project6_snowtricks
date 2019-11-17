@@ -1,7 +1,10 @@
+
+{% if is_granted('ROLE_USER') %}
 <form method="post" action="{{ path(domaine ~ '_delete', {'id': id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir le supprimer ?');">
     <input type="hidden" name="_method" value="DELETE">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ id) }}">
     <button id="delete{{ deletelabel is defined ?  '_' ~ domaine ~ '_' ~   id : '' }}" class="btn btn-danger">
         <i class="fas fa-trash"></i> Supprimer</button>
 </form>
+{%  endif %}
 

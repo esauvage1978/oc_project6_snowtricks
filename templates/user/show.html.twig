@@ -33,10 +33,12 @@
                 <div class="card-footer">
                     <div class="row">
                         <div class="col  d-flex justify-content-between align-items-center">
-                            <a class="btn btn-info btn-sm"
-                               href="{{ path('user_edit', {'id': user.id}) }}">
-                                <i class="fas fa-edit"></i> Editer
-                            </a>
+                            {% if  is_granted('ROLE_ADMIN') %}
+                                <a class="btn btn-info btn-sm"
+                                   href="{{ path('user_edit', {'id': user.id}) }}">
+                                    <i class="fas fa-edit"></i> Editer
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -80,9 +82,11 @@
                     {% for trick in user.tricks %}
                         {{ include('trick/_show_list_group_item.html.twig') }}
                     {% else %}
-                        <div class="list-group-item">
-                            <a class="text-success" href="{{ path('trick_new') }}">Ajouter une figure</a>
-                        </div>
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="list-group-item">
+                                <a class="text-success" href="{{ path('trick_new') }}">Ajouter une figure</a>
+                            </div>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </article>
