@@ -64,6 +64,7 @@ class TrickController extends AbstractController
      */
     public function newAction(Request $request, TrickManager $manager): Response
     {
+        $this->denyAccessUnlessGranted(TrickVoter::CREATE, null);
 
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);

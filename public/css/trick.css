@@ -9,7 +9,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3vw;
+    font-size: 4vw;
+    font-weight: bold;
     color: #296dde;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 1);
     background-color: rgba(60, 213, 255, 0.3);

@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
     {% block body %}
+<header class="d-none d-sm-block">
         <div class="bg-image"
              style="height:100px;  background-image: url({{ absolute_url( asset('/img/fond_snowtricks.jpg')) }})">
         </div>
+</header>
         <div class="content-wrapper">
             <div class="content-header">
                 <div class="container-fluid">
@@ -25,5 +27,7 @@
                 </div>
             </section>
         </div>
+
+        <div class="m-5"></div>
     {% endblock %}
 

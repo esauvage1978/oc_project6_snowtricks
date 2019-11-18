@@ -37,9 +37,9 @@ class UserManager
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function update(User $user): bool
+    public function update(User $user, string $oldMail=null): bool
     {
-        $this->initialiseUser($user);
+        $this->initialiseUser($user,$oldMail);
 
         if (!$this->validator->isValid($user)) {
             return false;
@@ -51,9 +51,9 @@ class UserManager
         return true;
     }
 
-    public function initialiseUser(User $user)
+    public function initialiseUser(User $user, string $oldMail=null)
     {
-        if (empty($user->getEmailValidatedToken())) {
+        if (empty($user->getEmailValidatedToken()) or ($user->getEmail()!==$oldMail and $oldMail!==null)) {
             $user
                     ->setEmailValidated(false)
                     ->setEmailValidatedToken(md5(random_bytes(50)));

@@ -30,7 +30,7 @@ class TrickVoter extends Voter
         }
 
 // only vote on Post objects inside this voter
-        if (!$subject instanceof Trick) {
+        if ($subject!==null and !$subject instanceof Trick) {
             return false;
         }
 
@@ -63,14 +63,22 @@ class TrickVoter extends Voter
 
     private function canUpdate(Trick $trick, User $user)
     {
+        if( !$user->getEmailValidated()) {
+            return false;
+        }
+
         if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
             return true;
         }
         return $user === $trick->getUser();
     }
 
-    private function canCreate(Trick $trick, User $user)
+    private function canCreate(?Trick $trick, User $user)
     {
+        if( !$user->getEmailValidated()) {
+            return false;
+        }
+
         if ($this->security->isGranted('ROLE_USER')) {
             return true;
         }
@@ -79,6 +87,10 @@ class TrickVoter extends Voter
 
     private function canDelete(Trick $trick, User $user)
     {
+        if( !$user->getEmailValidated()) {
+            return false;
+        }
+
         if ($this->security->isGranted('ROLE_GESTIONNAIRE')) {
             return true;
         }
