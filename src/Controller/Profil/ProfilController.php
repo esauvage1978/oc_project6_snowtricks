@@ -55,7 +55,6 @@ class ProfilController extends AbstractController
      * @param UserManager $userManager
      * @param Request $request
      * @return Response
-     * @IsGranted("ROLE_USER")
      */
     public function profilHomeAction(Request $request, UserManager $userManager): Response
     {
@@ -122,7 +121,6 @@ class ProfilController extends AbstractController
      *
      * @return Response
      *
-     * @IsGranted("ROLE_USER")
      */
     public function avatarAction(): Response
     {
@@ -134,7 +132,7 @@ class ProfilController extends AbstractController
     /**
      * @Route("/avatar/update", name="profil_avatar_update")
      *
-     * @IsGranted("ROLE_USER")
+     *
      */
     public function ajaxAction(Request $request, UserManager $userManager)
     {
@@ -159,12 +157,11 @@ class ProfilController extends AbstractController
      * @param UserSendmail $mail
      * @return Response
      *
-     * @IsGranted("ROLE_USER")
      */
     public function sendmailActivationAction(UserSendMail $mail): Response
     {
         $user=$this->getUser();
-        $mail->send($user,UserSendmail::VALIDATE);
+        $mail->send($user,UserSendmail::VALIDATE,'Snowtrick : Validation de l\'email');
         $this->addFlash('success', 'Le mail est envoyé, merci de consulter votre messagerie.');
         return $this->redirectToRoute('profil_home');
 
