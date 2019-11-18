@@ -24,7 +24,9 @@
                                 Figure
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
+                                {% if app.user.emailValidated==true %}
+                                    <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
+                                {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ path('category_index') }}">Liste des catégories</a>
                                 {% if  is_granted('ROLE_GESTIONNAIRE') %}

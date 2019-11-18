@@ -36,13 +36,14 @@
 
 {% block body %}
 {% endblock %}
-
-{{ include('structure/_footer.html.twig') }}
+<div id="preloader"></div>
 
 <a href="#" class="back-to-top">
     <i class="fa fa-chevron-up"></i>
 </a>
-<div id="preloader"></div>
+
+{{ include('structure/_footer.html.twig') }}
+
 
 
 <!-- JavaScript Libraries -->
@@ -58,7 +59,6 @@
 <script src="{{ absolute_url( asset('/vendor/devfolio-master/lib/typed/typed.min.js')) }}"></script>
 <!-- Template Main Javascript File -->
 <script src="{{ absolute_url(asset('/vendor/devfolio-master/js/main.js')) }}"></script>
-
 
 {% block javascripts %}
 {% endblock %}

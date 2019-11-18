@@ -11,79 +11,76 @@
 {% endblock %}
 
 {% block single_body %}
-    <section class="blog-wrapper sect-pt4  mb-4" id="topsection">
-        <div class="container-fluid">
-            <div class="row justify-content-center">
-                <div class="card ">
 
-                    <div class="card-body ">
-                        <div class="card-title  text-center mb-5 display-4">
-                            Connexion
+    <div class="row justify-content-center">
+        <div class="card ">
+
+            <div class="card-body ">
+                <div class="card-title  text-center mb-5 display-4">
+                    Connexion
+                </div>
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="text" value="{{ last_username }}"
+                                       placeholder="Nom d'utilisateur" name="username" id="inputUsername"
+                                       class="form-control" required autofocus>
+                            </div>
                         </div>
-                        <form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" value="{{ last_username }}"
-                                               placeholder="Nom d'utilisateur" name="username" id="inputUsername"
-                                               class="form-control" required autofocus>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-
-                                        <input type="password" name="password" placeholder="Mot de passe"
-                                               id="inputPassword" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="hidden" name="_csrf_token"
-                                   value="{{ csrf_token('authenticate') }}"
-                            >
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" name="_remember_me"><em>  Se souvenir de moi</em>
-                                </label>
-                            </div>
-
-                            <p class="text-center">
-                                <button class="btn btn-lg btn-primary  mb-4" id="login" name="login" type="submit">
-                                    Connexion
-                                </button>
-                            </p>
-
-                        </form>
-
                     </div>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col-md-12 d-flex justify-content-center">
-                    <h5>
-                        <a id="forget"
-                           href="{{ path('user_register') }}" title="Créer un compte">
-                            Créer un compte
-                        </a>
-                    </h5>
-                    <label class="ml-3 mr-3">|</label>
-                    <h5>
-                        <a id="forget"
-                           href="{{ path('user_password_forget') }}" title="Mot de passe oublié">
-                            Mot de passe oublié ?
-                        </a>
-                    </h5>
-                </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+
+                                <input type="password" name="password" placeholder="Mot de passe"
+                                       id="inputPassword" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"><em> Se souvenir de moi</em>
+                        </label>
+                    </div>
+
+                    <p class="text-center">
+                        <button class="btn btn-lg btn-primary  mb-4" id="login" name="login" type="submit">
+                            Connexion
+                        </button>
+                    </p>
+
+                </form>
+
             </div>
         </div>
-    </section>
+    </div>
+    <div class="row mt-5">
+        <div class="col-md-12 d-flex justify-content-center">
+            <h5>
+                <a id="forget"
+                   href="{{ path('user_register') }}" title="Créer un compte">
+                    Créer un compte
+                </a>
+            </h5>
+            <label class="ml-3 mr-3">|</label>
+            <h5>
+                <a id="forget"
+                   href="{{ path('user_password_forget') }}" title="Mot de passe oublié">
+                    Mot de passe oublié ?
+                </a>
+            </h5>
+        </div>
+    </div>
 
 {% endblock %}
