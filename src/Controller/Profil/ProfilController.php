@@ -60,11 +60,12 @@ class ProfilController extends AbstractController
     public function profilHomeAction(Request $request, UserManager $userManager): Response
     {
         $user = $this->getUser();
+        $oldEmail= $this->getUser()->getEmail();
         $form = $this->createForm(ProfilType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($userManager->update($user)) {
+            if ($userManager->update($user,$oldEmail)) {
                 $this->addFlash('success', 'Modification effectué');
             } else {
                 $this->addFlash('danger', 'Erreur lors de la modification : ' . $userManager->getErrors($user));

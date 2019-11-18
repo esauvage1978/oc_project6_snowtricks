@@ -232,12 +232,13 @@ class UserController extends AbstractController
      */
     public function editAction(Request $request, User $user, UserManager $manager): Response
     {
+        $oldEmail= $user->getEmail();
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            if ($manager->update($user)) {
+            if ($manager->update($user,$oldEmail)) {
                 $this->addFlash('success', 'Modification de l\'utilisateur effectuée');
 
                 return $this->redirectToRoute('user_index');

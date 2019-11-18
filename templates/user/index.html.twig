@@ -35,7 +35,9 @@
                             <tr>
                                 <td>{{ user.id }}</td>
                                 <td>
-                                    {{ user.username }}
+                                    <span class="text-{{ user.emailValidated ? 'success' : 'danger font-weight-bold' }}">
+                                        {{ user.username }}
+                                    </span>
                                 </td>
                                 <td>
                                     {{ user.email }}
