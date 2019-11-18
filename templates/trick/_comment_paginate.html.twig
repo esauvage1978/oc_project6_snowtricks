@@ -1,0 +1,42 @@
+<a id="scroll"></a>
+{% if nbrPages > 1 %}
+
+    {# Number of page around current page+1 #}
+    {% set nearbyPagesLimit = 10 %}
+
+    <div class="container">
+        <nav aria-label="">
+            <ul class="pagination justify-content-center">
+                {% if currentPage != 1 %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ path('trick_show', {'slug': trick.slug,'page': 1 }) }}#scroll">Début</a>
+                    </li>
+                {% endif %}
+                {% for i in 1..nbrPages %}
+                    {% if 1 == (currentPage - nearbyPagesLimit) - loop.index %} {# dot before #}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a>
+                        </li>
+                    {% elseif 1 == (currentPage + nearbyPagesLimit) - loop.index %} {# dot after #}
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a>
+                        </li>
+                    {% elseif 1 < (currentPage - nearbyPagesLimit) - loop.index %} {# hide all before #}
+                    {% elseif 1 > (currentPage + nearbyPagesLimit) - loop.index %} {# hide all after #}
+                    {% else %}
+                        <li class="page-item {% if currentPage == loop.index %}active {% endif %}">
+                            <a class="page-link"
+                               href="{{ path('trick_show', {'slug': trick.slug, 'page': loop.index }) }}#scroll
+">{{ loop.index }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+                {% if currentPage != nbrPages %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="{{ path('trick_show', {'slug': trick.slug, 'page': nbrPages }) }}#scroll">Fin</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}

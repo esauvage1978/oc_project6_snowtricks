@@ -1,0 +1,14 @@
+<div class="post">
+    <div class="user-block">
+        <img class="img-circle img-bordered-sm" src="{{ comment.user.avatar.image }}" alt="user image">
+        <span class="username">
+          <a href="{{ path('user_show',{'id':comment.user.id}) }}">{{ comment.user.username }}</a>
+        </span>
+        <span class="description">commenté le {{comment.createdat | date('d/m/Y')}}</span>
+    </div>
+    <!-- /.user-block -->
+    <p>
+        {{ comment.content | e }}
+    </p>
+
+</div>

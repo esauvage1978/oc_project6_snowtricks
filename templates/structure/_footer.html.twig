@@ -1,42 +1,43 @@
-<!--/ Section Contact-Footer Star /-->
-<div class="d-none d-sm-block">
-    <section class="paralax-mf footer-paralax bg-image route"
-             style="
-            background-image: url({{ absolute_url( asset('./img/fond_snowtricks.jpg')) }} )">
-        <div class="overlay-mf"></div>
-        <footer>
-            <div class="container-fluid">
-                <div class="row text-muted">
-                    <div class="col-sm-4 menu">
-                        <a href="{{ path('home') }}">Les figures</a>
-                    </div>
-                    <div class="col-sm-4 copyright">
-                        Snowtricks - Copyright &copy; 2019
-                    </div>
-                    <div class="col-sm-4 credits">
-                        <a href="https://mylostuniver.com">
-                            Réalisé par <strong>Emmanuel SAUVAGE</strong>.
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </section>
-    <!--/ Section Contact-footer End /-->
-</div>
-<div class="d-block d-sm-none">
-    <footer>
-        <div class="jumbotron">
-            <a href="https://mylostuniver.com">
-                Réalisé par <strong>Emmanuel SAUVAGE</strong>.
-            </a>
+<div class=" fixed-bottom d-none d-sm-block">
+    <footer class=" bg-image pt-2"
+            style="
+                    background-image: url({{ absolute_url( asset('./img/fond_snowtricks.jpg')) }} )">
+
+        <div class="d-flex justify-content-around text-dark" style="text-shadow: 2px 2px 4px rgba(255, 255, 255, 1);">
+                <a class="text-dark"  href="{{ path('home') }}">Les figures</a>
+            <span>
+                Snowtricks - Copyright &copy; 2019
+                </span>
+                <a class="text-dark" href="https://mylostuniver.com">
+                    Réalisé par <strong>Emmanuel SAUVAGE</strong>.
+                </a>
         </div>
+
+    </footer>
+</div>
+<div class="  fixed-bottom d-block d-sm-none">
+    <footer>
+
         <nav class="navbar fixed-bottom bg-dark navbar-dark">
 
             <a class="nav-link js-scroll " id="home" href="{{ path('home') }}">
                 <i class="fas fa-home fa-2x"></i>
             </a>
 
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a class="nav-link js-scroll " href="{{ path('user_logout') }}">
+                    <i class="fa fa-sign-out-alt fa-2x"></i>
+                </a>
+            {% else %}
+                <a class="nav-link js-scroll " id="signin"
+                   href="{{ path('user_login') }}">
+                    <i class="fa fa-sign-in-alt fa-2x"></i>
+                </a>
+                <a class="nav-link js-scroll " id="signup"
+                   href="{{ path('user_register') }}">
+                    <i class="fa fa-user-plus fa-2x"></i>
+                </a>
+            {% endif %}
 
         </nav>
     </footer>
