@@ -6,6 +6,8 @@ use App\Entity\Category;
 use App\Form\Category\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Service\CategoryManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,6 +37,7 @@ class CategoryController extends AbstractController
      * @param Request $request
      * @param CategoryManager $categoryManager
      * @return Response
+     * @isGranted("ROLE_GESTIONNAIRE")
      */
     public function newAction(Request $request, CategoryManager $categoryManager): Response
     {
@@ -78,6 +81,8 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param CategoryManager $categoryManager
      * @return Response
+     *
+     * @isGranted("ROLE_GESTIONNAIRE")
      */
     public function editAction(Request $request, Category $category, CategoryManager $categoryManager): Response
     {
@@ -107,6 +112,8 @@ class CategoryController extends AbstractController
      * @param Category $category
      * @param CategoryManager $categoryManager
      * @return Response
+     *
+     * @isGranted("ROLE_GESTIONNAIRE")
      */
     public function deleteAction(Request $request, Category $category, CategoryManager $categoryManager ): Response
     {

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Helper\Slugger;
 use App\Validator\TrickValidator;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Security;
 
 class TrickManager
 {
@@ -20,10 +21,16 @@ class TrickManager
      */
     private $validator;
 
-    public function __construct(ObjectManager $manager, TrickValidator $validator)
+    /**
+     * @var Security
+     */
+    private $securityContext;
+
+    public function __construct(ObjectManager $manager, TrickValidator $validator, Security $securityContext)
     {
         $this->manager = $manager;
         $this->validator = $validator;
+        $this->securityContext = $securityContext;
     }
 
     public function update(Trick $trick): bool
@@ -56,6 +63,10 @@ class TrickManager
         foreach ($trick->getImages() as $image)
         {
             $image->setTrick($trick);
+        }
+
+        if(empty( $trick->getUser())) {
+            $trick->setUser( $this->securityContext->getToken()->getUser());
         }
 
         $trick->setSlug(

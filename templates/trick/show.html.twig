@@ -12,67 +12,72 @@
 {% block single_body %}
 
 
-    <div class="row justify-content-center">
-        <div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
-            <article class="card ">
-                <div class="figure-mainimage-container">
-                    <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt="Snow" style="width:100%;">
-                    <div class="top-right d-flex  flex-row">
+<div class="row justify-content-center">
+    <div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
+        <article class="card ">
+            <div class="figure-mainimage-container">
+                <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt="Snow" style="width:100%;">
+                <div class="top-right d-flex  flex-row">
+                    {% if trick | canUpdateTrick %}
                         <a class="btn btn-info "
                            href="{{ path('trick_edit', {'slug': trick.slug}) }}">
                             <i class="fas fa-edit"></i>
                         </a>
-                        <div class="ml-2">
+                    {% endif %}
+                    <div class="ml-2">
+                        {% if trick | canUpdateTrick %}
                             <span class="btn btn-danger " onclick="$('#delete').click();">
                                 <i class="fas fa-trash"></i>
                             </span>
-                        </div>
+                        {% endif %}
                     </div>
-                    <div class="centered">{{ trick.name }}</div>
                 </div>
-                {{  include ('trick/_show_media.html.twig') }}
-                <div class="card-body">
-                    {{ trick.content | raw }}
-                </div>
+                <div class="centered">{{ trick.name }}</div>
+            </div>
+            {{ include ('trick/_show_media.html.twig') }}
+            <div class="card-body">
+                {{ trick.content | raw }}
+            </div>
 
-                <div class="card-footer text-muted text-center">
-                    <span class="badge badge-info">Publié le {{ trick.createAt | date('d-m-Y') }}</span>
-                    {% if trick.modifyAt %}
-                        <span class="badge badge-info">Mis à jour le {{ trick.modifyAt | date('d-m-Y') }}</span>
-                    {% endif %}
-                    {% for category in trick.categories %}
-                        {{ include('category/_show_btn.html.twig') }}
-                    {% endfor %}
-                </div>
-
-            </article>
-
-            <article class="card mt-2">
-                {% if app.user %}
-                    <div class="card-body">
-                        <div class="card-text">
-                            <div class="form-group">
-                                {{ form_start(form) }}
-                                {{ form_widget(form) }}
-                                <div class="form-group card-text">
-                                    <button type="submit" class="btn btn-outline-dark">Ajouter
-                                        votre
-                                        commentaire
-                                    </button>
-                                </div>
-                                {{ form_end(form) }}
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="card-body">
-                        <p>Veuillez vous connecter pour laisser un commentaire
-                            <a href="{{ path('user_login') }}">Se connecter</a>
-
-                        </p>
-                    </div>
+            <div class="card-footer text-muted text-center">
+                <span class="badge badge-info">Publié le {{ trick.createAt | date('d-m-Y') }}</span>
+                {% if trick.modifyAt %}
+                    <span class="badge badge-info">Mis à jour le {{ trick.modifyAt | date('d-m-Y') }}</span>
                 {% endif %}
+                {% for category in trick.categories %}
+                    {{ include('category/_show_btn.html.twig') }}
+                {% endfor %}
+            </div>
 
+        </article>
+
+        <article class="card mt-2">
+            {% if app.user %}
+                <div class="card-body">
+                    <div class="card-text">
+                        <div class="form-group">
+                            {{ form_start(form) }}
+                            {{ form_widget(form) }}
+                            <div class="form-group card-text">
+                                <button type="submit" class="btn btn-outline-dark">Ajouter
+                                    votre
+                                    commentaire
+                                </button>
+                            </div>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card-body">
+                    <p>Veuillez vous connecter pour laisser un commentaire
+                        <a href="{{ path('user_login') }}">Se connecter</a>
+
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if comments.count > 0 %}
                 <div class="card-body">
                     <ul class="list-unstyled">
                         {% for comment in comments %}
@@ -82,17 +87,18 @@
                     {{ include('trick/_comment_paginate.html.twig') }}
 
                 </div>
-            </article>
-        </div>
+            {% endif %}
+        </article>
     </div>
+</div>
 
-    <div class="d-none">
-        {{ include ('share/_delete.html.twig',{
-            'domaine':'trick',
-            'id':trick.id
-        }) }}
-    </div>
-    {{ include('trick/_trick_imagemodal.html.twig') }}
+<div class="d-none">
+    {{ include ('share/_delete.html.twig',{
+        'domaine':'trick',
+        'id':trick.id
+    }) }}
+</div>
+{{ include('trick/_trick_imagemodal.html.twig') }}
 {% endblock %}
 {% block javascripts %}
     <script src="{{ absolute_url( asset('js/trick_media.js')) }}"></script>
