@@ -57,7 +57,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/registrer", name="user_registrer", methods={"GET","POST"})
+     * @Route("/register", name="user_register", methods={"GET","POST"})
      *
      * @param Request $request
      * @param UserManager $manager
@@ -65,7 +65,7 @@ class UserController extends AbstractController
      *
      * @return Response
      */
-    public function registrationAction(Request $request, UserManager $manager, EventDispatcherInterface $dispatcher): Response
+    public function registerAction(Request $request, UserManager $manager, EventDispatcherInterface $dispatcher): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrerType::class, $user);
@@ -84,7 +84,7 @@ class UserController extends AbstractController
             $this->addFlash('danger', 'La création a echoué. En voici les raisons : ' . $manager->getErrors($user));
         }
 
-        return $this->render('user/registrer.html.twig', [
+        return $this->render('user/register.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);
