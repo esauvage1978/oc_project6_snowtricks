@@ -1,0 +1,136 @@
+{% extends 'single.html.twig' %}
+
+{% block title %}{{ parent() }} Votre compte{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ absolute_url( asset('css/profil.css')) }}">
+{% endblock %}
+
+{% block single_header %}
+    {{ include('structure/_breadcrum.html.twig',
+        {
+            'domaine': 'Utilisateur',
+            'action' : 'Votre compte'
+        }) }}
+{% endblock %}
+
+{% block single_body %}
+    <div class="row justify-content-center">
+        <section class="col-sm-12 col-md-8 col-lg-8 col-xl-6">
+            <article class="card">
+                <div class="card-body box-profile">
+                    <div class="text-center">
+                        <img class="profile-user-img img-fluid img-circle"
+                             src="{{ user.avatar.image | raw }}"
+                             alt="User profile picture">
+                    </div>
+                    <h3 class="profile-username text-center">{{ user.username }}</h3>
+
+                    <p class="text-muted text-center">{{ user.email }}</p>
+                </div>
+            </article>
+            {% if app.user.emailvalidated == false %}
+                <div class="alert alert-danger alert-dismissible mt-2">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Adresse mail non vérifiée !</h5>
+                    <p>
+                        Attention votre adresse mail n'a pas encore été vérifiée.
+                    </p>
+                    <p>
+                        <a href="{{ path('profil_sendmail_email_validated') }}">Cliquer ici</a> pour renvoyer le lien de
+                        vérification.
+                    </p>
+                </div>
+            {% endif %}
+            {{ form_start(form) }}
+            <article class="card mt-2 ">
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        {{ form_label(form.username,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+                        <div class="col">
+                            {{ form_errors(form.username) }}
+                            {{ form_widget(form.username) }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        {{ form_label(form.email,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+                        <div class="col">
+                            {{ form_errors(form.email) }}
+                            {{ form_widget(form.email) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col  d-flex justify-content-between align-items-center">
+
+                            <button class="btn btn-info " name="update" id="update"><i class="fas fa-pencil-alt"></i>
+                                Modifier
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {{ form_end(form) }}
+
+            <div class="row mt-5">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <h5>
+                        <a id="forget"
+                           href="{{ path('profil_avatar') }}" title="Changer d'avatar">
+                            Changer d'avatar
+                        </a>
+                    </h5>
+                </div>
+            </div>
+        </section>
+        <aside class="col-sm-12 col-md-4">
+            <article class="card">
+                <div class="card-footer">
+                    Habilitations
+                </div>
+                <div class="list-group list-group-flush dropright">
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_ADMIN' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Administrateur</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Administrateur</span>
+                        {% endif %}
+                    </div>
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_GESTIONNAIRE' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Gestionnaire</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Gestionnaire</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="list-group-item list-group-item-action">
+                        {% if 'ROLE_USER' in user.roles %}
+                            <span class="text-success"><i class="fas fa-check"></i> Utilisateur</span>
+                        {% else %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Utilisateur</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </article>
+            <article class="card mt-3">
+                <div class="card-footer">
+                    Vos figures
+                </div>
+                <div class="list-group list-group-flush dropright">
+                    {% for trick in user.tricks %}
+                        {{ include('trick/_show_list_group_item.html.twig') }}
+                    {% else %}
+                        <div class="list-group-item">
+                            <a class="text-success" href="{{ path('trick_new') }}">Ajouter une figure</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </article>
+
+        </aside>
+    </div>
+{% endblock %}

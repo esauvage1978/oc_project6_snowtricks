@@ -1,0 +1,11 @@
+App\Entity\Category:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+  properties:
+    name:
+      - NotBlank: ~
+      - Length:
+          min: 3
+          max: 30
+          minMessage: 'La catégorie "{{ value }}" doit avoir plus de 3 caractères'
+          maxMessage: 'La catégorie "{{ value }}" ne peut pas avoir plus de 30 caractères'

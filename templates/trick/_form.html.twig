@@ -1,0 +1,23 @@
+<div class="card-body">
+    <div class="form-group row">
+        {{ form_label(form.name,'', { 'label_attr': {'class':'col-sm-3 col-form-label' }}) }}
+        <div class="col">
+            {{ form_widget(form.name) }}
+        </div>
+
+    </div>
+
+    {{ form_row(form.content) }}
+
+    {{ form_row(form.categories) }}
+</div>
+<div class="card-footer">
+    <div id="trick-media-new">
+        <div class="row">
+            <div class="col-xl-6 media-add" id="media-add-video"
+                 data-prototype="{{ form_row(form.videos.vars.prototype) | e('html_attr') }}"></div>
+        </div>
+    </div>
+
+
+</div>

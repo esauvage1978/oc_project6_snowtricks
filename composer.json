@@ -26,10 +26,13 @@
         "symfony/twig-bundle": "4.3.*",
         "symfony/validator": "4.3.*",
         "symfony/web-link": "4.3.*",
-        "symfony/yaml": "4.3.*"
+        "symfony/yaml": "4.3.*",
+      "ext-json": "*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
         "friendsofphp/php-cs-fixer": "^2.16",
+        "fzaninotto/faker": "^1.8",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
         "symfony/profiler-pack": "*",

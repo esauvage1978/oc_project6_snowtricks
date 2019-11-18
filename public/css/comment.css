@@ -1,0 +1,50 @@
+.post {
+    border-bottom: 1px solid #adb5bd;
+    color:#666;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+.post p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+.post .user-block {
+    margin-bottom: 15px;
+    width: 100%;
+}
+.user-block {
+    float: left;
+}
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+.user-block img {
+    float: left;
+    height: 40px;
+    width: 40px;
+}
+.img-circle {
+    border-radius: 50%;
+}
+.img-bordered-sm {
+    border: 2px solid
+    #adb5bd;
+    padding: 2px;
+}
+
+.user-block .username {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: -1px;
+}
+.user-block .description {
+    color: #6c757d;
+    font-size: 13px;
+    margin-top: -3px;
+}
+.user-block .comment, .user-block .description, .user-block .username {
+    display: block;
+    margin-left: 50px;
+}

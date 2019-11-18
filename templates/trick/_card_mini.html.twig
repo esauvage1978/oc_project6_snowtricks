@@ -1,0 +1,37 @@
+<article class="card">
+    <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+        <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt=""
+             class="card-img-top">
+    </a>
+    <div class="card-body">
+        <h4>
+            <a href="{{ path('trick_show', {'slug': trick.slug}) }}">
+                {{ trick.name }}
+            </a>
+        </h4>
+    </div>
+    <div class="card-footer ">
+        <div class="bottom-right d-flex  flex-row">
+            {% if trick | canUpdateTrick %}
+                <a class="btn btn-info btn-sm "
+                   href="{{ path('trick_edit', {'slug': trick.slug}) }}">
+                    <i class="fas fa-edit"></i>
+                </a>
+            {% endif %}
+            {% if trick | canDeleteTrick %}
+                <div class="ml-2">
+                <span class="btn btn-danger btn-sm" onclick="$('#delete').click();">
+                    <i class="fas fa-trash"></i>
+                </span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+</article>
+<div class="d-none">
+    {{ include ('share/_delete.html.twig',{
+        'domaine':'trick',
+        'id':trick.id
+    }) }}
+</div>

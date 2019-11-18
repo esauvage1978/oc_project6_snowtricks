@@ -16,7 +16,53 @@
                 <li class="nav-item">
                     <a class="nav-link js-scroll " id="home" href="{{ path('home') }}">Page d'accueil</a>
                 </li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if  is_granted('ROLE_USER') %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false">
+                                Figure
+                            </a>
+                            <div class="dropdown-menu">
+                                {% if app.user.emailValidated==true %}
+                                    <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
+                                {% endif %}
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{{ path('category_index') }}">Liste des catégories</a>
+                                {% if  is_granted('ROLE_GESTIONNAIRE') %}
+                                    <a class="dropdown-item" href="{{ path('category_new') }}">Ajouter une catégorie</a>
+                                {% endif %}
+                            </div>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
+                            Utilisateur
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="{{ path('user_index') }}">Liste</a>
+                            {% if  is_granted('ROLE_ADMIN') %}
+                                <a class="dropdown-item" href="{{ path('user_new') }}">Ajouter</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ app.user.username }}
+                        </a>
+                        <div class="dropdown-menu" style="margin-left:-100px" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ path('profil_home') }}">Votre compte</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('user_logout') }}">{{ 'Logout' | trans }}</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link js-scroll " id="signin"
+                                            href="{{ path('user_login') }}">Connexion</a></li>
 
+                {% endif %}
             </ul>
         </div>
     </nav>
