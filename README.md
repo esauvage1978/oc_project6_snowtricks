@@ -1,10 +1,10 @@
 # oc_project6_snowtricks
 
 ### Openclassrooms / Projet 6 : Développez de A à Z le site communautaire SnowTricks
-[![Maintainability]()
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70dbbb1769584baa94c6c546620ef3e7)](https://www.codacy.com/manual/esauvage1978/oc_project6_snowtricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=esauvage1978/oc_project6_snowtricks&amp;utm_campaign=Badge_Grade)
 
 
-## Getting Started :metal:
+## Getting Started
 
 1. copy repository `git clone https://github.com/esauvage1978/oc_project6_snowtricks.git`
 2. `composer install`
