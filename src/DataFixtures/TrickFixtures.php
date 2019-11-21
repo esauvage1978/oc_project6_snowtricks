@@ -129,8 +129,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->validator = $validator;
         $this->trickManager = $trickManager;
-        $this->faker = new Factory();
-        $this->faker = $this->faker->create('fr_FR');
+        $this->faker = Factory::create('fr_FR');
     }
 
     public function load(ObjectManager $manager)

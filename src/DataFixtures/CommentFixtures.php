@@ -29,8 +29,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
     public function __construct(CommentManager $commentManager)
     {
         $this->commentManager = $commentManager;
-        $this->faker = new Factory();
-        $this->faker = $this->faker->create('fr_FR');
+        $this->faker = Factory::create('fr_FR');
     }
 
     public function load(ObjectManager $manager)
