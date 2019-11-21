@@ -21,7 +21,7 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
-    public function findAllCommentFigure($page, $limit, Trick $trick)
+    public function commentsForTrickPaginator($page, $limit, Trick $trick)
     {
         $qb = $this->_em->createQueryBuilder('c');
         $qb->select('c')

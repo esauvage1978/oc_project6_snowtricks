@@ -47,7 +47,7 @@ class CommentPaginate
 
     public function getCommentsForPage($page)
     {
-        return $this->commentRepository->findAllCommentFigure(
+        return $this->commentRepository->commentsForTrickPaginator(
              $page,
              $this->nbrCommentLimitShow,
              $this->trick);
