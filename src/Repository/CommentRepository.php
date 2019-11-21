@@ -23,12 +23,15 @@ class CommentRepository extends ServiceEntityRepository
 
     public function commentsForTrickPaginator($page, $limit, Trick $trick)
     {
-        $qb = $this->_em->createQueryBuilder('c');
-        $qb->select('c')
-            ->from('App\Entity\Comment', 'c')
-            ->leftJoin('c.trick', 'a')
-            ->where('a.id =:id')
-            ->orderBy('c.createdAt', 'DESC')
+        $commentAlias = "c";
+        $trickAlias = 't';
+
+        $qb = $this->_em->createQueryBuilder($commentAlias);
+        $qb->select($commentAlias)
+            ->from('App\Entity\Comment', $commentAlias)
+            ->leftJoin($commentAlias. '.trick', $trickAlias)
+            ->where($trickAlias.'.id =:id')
+            ->orderBy($commentAlias.'.createdAt', 'DESC')
             ->setParameter('id', $trick->getId())
             ->setFirstResult(($page - 1) * $limit)
             ->setMaxResults($limit);
