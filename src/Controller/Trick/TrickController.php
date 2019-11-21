@@ -9,7 +9,7 @@ use App\Form\Trick\TrickType;
 use App\Repository\CommentRepository;
 use App\Security\TrickVoter;
 use App\Service\CommentManager;
-use App\Service\CommentPaginate;
+use App\Service\CommentPaginator;
 use App\Service\TrickManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -92,29 +92,30 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param Trick $trick
      * @param CommentManager $commentManager
-     * @param CommentRepository $commentRepository
+     * @param CommentPaginator $commentPaginator
+     * @param $page
      * @return Response
      */
     public function showAction(
         Request $request,
         Trick $trick,
         CommentManager $commentManager,
-        CommentPaginate $commentPaginate,
+        CommentPaginator $commentPaginator,
         $page = 1
     ): Response
     {
 
-        $commentPaginate->initialise($trick);
+        $commentPaginator->initialise($trick);
 
-        $page=$commentPaginate->checkPage($page);
+        $page=$commentPaginator->checkPage($page);
 
-        $nbrPages=$commentPaginate->getNbrSheets();
+        $nbrPages=$commentPaginator->getNbrSheets();
 
         if ($page > $nbrPages ) {
             $page = $nbrPages;
         }
 
-        $comments=$commentPaginate->getCommentsForPage($page);
+        $comments=$commentPaginator->getCommentsForPage($page);
 
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment);

@@ -6,7 +6,7 @@ use App\Entity\Trick;
 use App\Repository\CommentRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class CommentPaginate
+class CommentPaginator
 {
     /**
      * @var ParameterBagInterface
