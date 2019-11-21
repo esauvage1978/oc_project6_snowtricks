@@ -3,10 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Comment;
-use App\Entity\Trick;
 use App\Service\CommentManager;
-use App\Service\TrickManager;
-use App\Validator\TrickValidator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -53,17 +50,6 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
             }
         }
 
-    }
-
-
-    private function initialise(Trick $instance, $data): Trick
-    {
-
-         {
-
-            $instance->addComment($comment);
-        }
-        return $instance;
     }
 
     public function getDependencies()
