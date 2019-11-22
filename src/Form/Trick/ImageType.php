@@ -19,16 +19,22 @@ class ImageType extends AbstractType
         $builder
             ->add('file', FileType::class,
                 [
-                    'label'			=> 'Choisir le fichier'
+                    'label'			=> 'Choisir le fichier',
+                    'required'=>false
+                ])
+            ->add('comment', hiddenType::class,
+                [
+                    'label'			=> 'test',
+                    'required'=>false
                 ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
                 $image = $event->getData();
                 $form = $event->getForm();
 
                 if($image && $image->getId() !== null) {
-                    $form->add('name', HiddenType::class);
-                    $form->add('extension', HiddenType::class);
-                    $form->remove('file');
+                    $form->add('name', hiddenType::class);
+                    $form->add('extension', hiddenType::class);
+
                 }
             })
         ;
