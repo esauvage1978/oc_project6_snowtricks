@@ -14,6 +14,7 @@ use App\Service\TrickManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,7 +93,8 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param Trick $trick
      * @param CommentManager $commentManager
-     * @param CommentPaginator $commentPaginator
+     * @param ParameterBagInterface $parameterBag,
+     * @param CommentRepository $commentRepository,
      * @param $page
      * @return Response
      */
@@ -100,20 +102,16 @@ class TrickController extends AbstractController
         Request $request,
         Trick $trick,
         CommentManager $commentManager,
-        CommentPaginator $commentPaginator,
+        ParameterBagInterface $parameterBag,
+        CommentRepository $commentRepository,
         $page = 1
     ): Response
     {
-
-        $commentPaginator->initialise($trick);
+        $commentPaginator=new CommentPaginator($parameterBag,$commentRepository,$trick);
 
         $page=$commentPaginator->checkPage($page);
 
         $nbrPages=$commentPaginator->getNbrSheets();
-
-        if ($page > $nbrPages ) {
-            $page = $nbrPages;
-        }
 
         $comments=$commentPaginator->getCommentsForPage($page);
 

@@ -28,18 +28,13 @@ class CommentPaginator
 
     public function __construct(
         ParameterBagInterface $params,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        Trick $trick
     )
     {
         $this->params = $params;
         $this->commentRepository = $commentRepository;
-
-    }
-
-    public function initialise(Trick $trick)
-    {
         $this->trick = $trick;
-
 
         $this->calculNbrComments();
         $this->calculNbrCommentLimitShow();
@@ -69,9 +64,13 @@ class CommentPaginator
 
     public function checkPage($page)
     {
+        $nbrPages=$this->getNbrSheets();
         if (is_null($page) || $page < 1) {
            return 1;
+        } else if ($page > $nbrPages ) {
+            $page = $nbrPages;
         }
+
         return $page;
     }
 }
