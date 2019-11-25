@@ -31,15 +31,7 @@ class VideoType extends AbstractType
                     ucwords(Video::DAILYMOTION) => Video::DAILYMOTION
                 ]
             ))
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
-                $video = $event->getData();
-                $form = $event->getForm();
 
-                if($video && $video->getId() !== null) {
-                    $form->add('code', HiddenType::class);
-                    $form->add('plateform', HiddenType::class);
-                }
-            })
         ;
     }
 

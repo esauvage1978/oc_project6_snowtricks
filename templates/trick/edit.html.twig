@@ -22,17 +22,32 @@
         <div class="col-sm-12 col-md-10 col-lg-9 col-xl-7">
             <article class="card ">
                 <div class="figure-mainimage-container">
-                    <img src="{{ absolute_url(asset(trick.mainimage)) }}" alt="Snow" style="width:100%;">
+                    <img id="main_img_nothing" src="{{ absolute_url(asset('img/trick_default.jpg')) }}" alt="Snow" class="d-none" style="width:100%;">
+                    <img id="main_img" src="{{ absolute_url(asset(trick.mainimage)) }}" alt="Snow" style="width:100%;">
                     <div class="centered">{{ trick.name }}</div>
+                    <div class="top-right">
+                        <span class="btn btn-danger "
+                                onclick="$('#trick_images_0').remove();$('#main_img').addClass('d-none');$('#main_img_nothing').removeClass('d-none');">
+                            <i class="fas fa-trash"></i>
+                        </span>
+                        <span class="media-edit btn btn-info "
+                              onclick="showMainImage();">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                    </div>
                 </div>
                 {{  include ('trick/_edit_media.html.twig') }}
                 {{  include ('trick/_form.html.twig') }}
-                <div class="card-footer">
+                <div class="card-footer mb-5">
                     <div class="row">
                         <div class="col  d-flex justify-content-between align-items-center">
                             <button class="btn btn-success " name="new" id="new" >
                                 <i class="fas fa-save"></i> Enregistrer
                             </button>
+
+                            <span class="btn btn-danger " onclick="$('#delete').click();">
+                                 <i class="fas fa-trash"></i> Supprimer
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -45,6 +60,9 @@
     </div>
     {{ form_end(form) }}
     {{ include('trick/_trick_imagemodal.html.twig') }}
+    <div class="d-none">
+    {{ include('share/_delete.html.twig',{'domaine':'trick','id':trick.id}) }}
+    </div>
 {% endblock %}
 
 

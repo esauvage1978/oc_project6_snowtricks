@@ -4,13 +4,13 @@
                     background-image: url({{ absolute_url( asset('./img/fond_snowtricks.jpg')) }} )">
 
         <div class="d-flex justify-content-around text-dark" style="text-shadow: 2px 2px 4px rgba(255, 255, 255, 1);">
-                <a class="text-dark"  href="{{ path('home') }}">Les figures</a>
+            <a class="text-dark" href="{{ path('home') }}">Les figures</a>
             <span>
                 Snowtricks - Copyright &copy; 2019
                 </span>
-                <a class="text-dark" href="https://mylostuniver.com">
-                    Réalisé par <strong>Emmanuel SAUVAGE</strong>.
-                </a>
+            <a class="text-dark" href="https://mylostuniver.com">
+                Réalisé par <strong>Emmanuel SAUVAGE</strong>.
+            </a>
         </div>
 
     </footer>
@@ -24,7 +24,24 @@
                 <i class="fas fa-home fa-2x"></i>
             </a>
 
+
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class="dropup">
+                <a class="dropdown-toggle dropdown-toggle-split text-primary" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-bookmark fa-2x"></i>
+                </a>
+                <div class="dropdown-menu">
+                    {% if app.user.emailValidated==true %}
+                        <a class="dropdown-item" href="{{ path('trick_new') }}">Ajouter</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('category_index') }}">Liste des catégories</a>
+                    {% if  is_granted('ROLE_GESTIONNAIRE') %}
+                        <a class="dropdown-item" href="{{ path('category_new') }}">Ajouter une catégorie</a>
+                    {% endif %}
+                </div>
+            </div>
                 <a class="nav-link js-scroll " href="{{ path('user_logout') }}">
                     <i class="fa fa-sign-out-alt fa-2x"></i>
                 </a>

@@ -53,16 +53,23 @@ $(document).ready(function() {
         var media_id = $(this).attr('data-msg');
         $('#media-'+media_url).remove();
         $('#'+media_id).remove();
-    })
+    });
 
-    $('.media-edit').click(function (e) {
-        e.preventDefault();
-        var media_id = $(this).attr('data-msg');
-        $('#'+media_id).get(0).type = 'text';
-    })
+
 
     $(".image-pop").on("click", function() {
         $('#imagepreview').attr('src', $(this).attr('src'));
         $('#imagemodal').modal('show');
     });
 });
+
+function showMainImage()
+{
+    $('#trick_images_0_comment').val(new Date());
+    $('#image_0').removeClass('d-none')
+}
+function showOtherImage($index)
+{
+    $('#trick_images_' + $index + '_comment').val(new Date());
+    $('#image_' + $index).removeClass('d-none')
+}
