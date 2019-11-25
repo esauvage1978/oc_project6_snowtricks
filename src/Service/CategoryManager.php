@@ -4,12 +4,12 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Validator\CategoryValidator;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CategoryManager
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
@@ -20,10 +20,10 @@ class CategoryManager
 
     /**
      * CategoryManager constructor.
-     * @param ObjectManager $manager
+     * @param EntityManagerInterface $manager
      * @param CategoryValidator $validator
      */
-    public function __construct(ObjectManager $manager, CategoryValidator $validator)
+    public function __construct(EntityManagerInterface $manager, CategoryValidator $validator)
     {
         $this->manager = $manager;
         $this->validator = $validator;

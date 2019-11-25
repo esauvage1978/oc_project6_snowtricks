@@ -6,13 +6,13 @@ use App\Entity\Trick;
 use App\Entity\User;
 use App\Helper\Slugger;
 use App\Validator\TrickValidator;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Security;
 
 class TrickManager
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
@@ -26,7 +26,7 @@ class TrickManager
      */
     private $securityContext;
 
-    public function __construct(ObjectManager $manager, TrickValidator $validator, Security $securityContext)
+    public function __construct(EntityManagerInterface $manager, TrickValidator $validator, Security $securityContext)
     {
         $this->manager = $manager;
         $this->validator = $validator;

@@ -6,12 +6,12 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Entity\User;
 use App\Validator\CommentValidator;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommentManager
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     private $manager;
 
@@ -20,7 +20,7 @@ class CommentManager
      */
     private $validator;
 
-    public function __construct(ObjectManager $manager,
+    public function __construct(EntityManagerInterface $manager,
                                 CommentValidator $validator)
     {
         $this->manager = $manager;
