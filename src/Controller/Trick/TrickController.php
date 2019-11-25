@@ -9,11 +9,12 @@ use App\Form\Trick\TrickType;
 use App\Repository\CommentRepository;
 use App\Security\TrickVoter;
 use App\Service\CommentManager;
-use App\Service\CommentPaginate;
+use App\Service\CommentPaginator;
 use App\Service\TrickManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,29 +93,27 @@ class TrickController extends AbstractController
      * @param Request $request
      * @param Trick $trick
      * @param CommentManager $commentManager
-     * @param CommentRepository $commentRepository
+     * @param ParameterBagInterface $parameterBag,
+     * @param CommentRepository $commentRepository,
+     * @param $page
      * @return Response
      */
     public function showAction(
         Request $request,
         Trick $trick,
         CommentManager $commentManager,
-        CommentPaginate $commentPaginate,
+        ParameterBagInterface $parameterBag,
+        CommentRepository $commentRepository,
         $page = 1
     ): Response
     {
+        $commentPaginator=new CommentPaginator($parameterBag,$commentRepository,$trick);
 
-        $commentPaginate->initialise($trick);
+        $page=$commentPaginator->checkPage($page);
 
-        $page=$commentPaginate->checkPage($page);
+        $nbrPages=$commentPaginator->getNbrSheets();
 
-        $nbrPages=$commentPaginate->getNbrSheets();
-
-        if ($page > $nbrPages ) {
-            $page = $nbrPages;
-        }
-
-        $comments=$commentPaginate->getCommentsForPage($page);
+        $comments=$commentPaginator->getCommentsForPage($page);
 
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment);

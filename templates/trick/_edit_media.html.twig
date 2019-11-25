@@ -7,6 +7,30 @@
 {% endif %}
 <div id="trick-media" class="scrollgallery d-none d-sm-block">
     <div class="d-flex align-items-start bd-highlight mb-3">
+        {% for image in trick.images %}
+
+                <div class="col-xl-4 col-lg-6 col-md-6 col-12 {{ loop.index0 >0 ?'':'d-none' }}">
+                    <div class="card  " id="media-{{ image.name }}">
+                        <img class="card-img-top image-pop" src="{{ asset(image.url) }}"
+                             alt="Card image cap"
+                        >
+                        <div class="bottom-right">
+
+                            <button class="media-delete btn btn-danger "
+                                    data-msg="trick_images_{{ loop.index0 }}"
+                                    data-media="{{ image.name }}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <span class="media-edit btn btn-info "
+                                  onclick="showOtherImage({{ loop.index0 }})">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+        {% endfor %}
         {% for video in trick.videos %}
             <div class="col-xl-4 col-lg-6 col-md-6 col-12">
                 <div class="card " id="media-{{ video.id }}">
@@ -19,43 +43,37 @@
                         <div class="bottom-right">
 
                             <button class="media-delete btn btn-danger "
-                                    data-msg="figure_videos_{{ loop.index0 }}"
+                                    data-msg="trick_videos_{{ loop.index0 }}"
                                     data-media="{{ video.id }}">
                                 <i class="fas fa-trash"></i>
                             </button>
                             <span class="media-edit btn btn-info "
-                                  data-msg="figure_videos_{{ loop.index0 }}_url">
-                                                <i class="fas fa-edit"></i>
-                                            </span>
+                                  onclick="$('#video_{{ loop.index0 }}').removeClass('d-none')">
+                                <i class="fas fa-edit"></i>
+                            </span>
                         </div>
 
                     </div>
-                    <div class="card-footer ">{{ form_widget(form.videos[loop.index0]) }}</div>
                 </div>
             </div>
         {% endfor %}
+
+    </div>
+</div>
+<div class="bg-light">
+    <div class="row">
         {% for image in trick.images %}
-            <div class="col-xl-4 col-lg-6 col-md-6 col-12">
-                <div class="card  " id="media-{{ image.name }}">
-                    <img class="card-img-top image-pop" src="{{ asset(image.url) }}"
-                         alt="Card image cap"
-                    >
-                    <div class="bottom-right">
-
-                        <button class="media-delete btn btn-danger "
-                                data-msg="figure_images_{{ loop.index0 }}"
-                                data-media="{{ image.name }}"><i
-                                    class="fas fa-trash"></i></button>
-
-                    </div>
-
-                    <div class="card-footer ">{{ form_widget(form.images[loop.index0]) }}</div>
-                </div>
+            <div id="image_{{ loop.index0 }}" class="d-none col-xl-6">
+                {{ form_widget(form.images[loop.index0]) }}
+            </div>
+        {% endfor %}
+        {% for video in trick.videos %}
+            <div id="video_{{ loop.index0 }}" class="d-none col-xl-6">
+                {{ form_widget(form.videos[loop.index0]) }}
             </div>
         {% endfor %}
     </div>
 </div>
-
 <div class="card-footer">
     <div id="trick-media-new">
         <div class="row">

@@ -26,6 +26,7 @@
     <link href="{{ absolute_url( asset('/vendor/devfolio-master/css/style.css')) }}" rel="stylesheet"/>
 
     <script src="{{ absolute_url( asset('/vendor/devfolio-master/lib/jquery/jquery.min.js')) }}"></script>
+
     {% block stylesheets %}
     {% endblock %}
 
@@ -36,11 +37,8 @@
 
 {% block body %}
 {% endblock %}
-<div id="preloader"></div>
 
-<a href="#" class="back-to-top">
-    <i class="fa fa-chevron-up"></i>
-</a>
+<div id="preloader"></div>
 
 {{ include('structure/_footer.html.twig') }}
 

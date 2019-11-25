@@ -6,7 +6,7 @@ use App\Entity\Trick;
 use App\Repository\CommentRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class CommentPaginate
+class CommentPaginator
 {
     /**
      * @var ParameterBagInterface
@@ -28,18 +28,13 @@ class CommentPaginate
 
     public function __construct(
         ParameterBagInterface $params,
-        CommentRepository $commentRepository
+        CommentRepository $commentRepository,
+        Trick $trick
     )
     {
         $this->params = $params;
         $this->commentRepository = $commentRepository;
-
-    }
-
-    public function initialise(Trick $trick)
-    {
         $this->trick = $trick;
-
 
         $this->calculNbrComments();
         $this->calculNbrCommentLimitShow();
@@ -47,7 +42,7 @@ class CommentPaginate
 
     public function getCommentsForPage($page)
     {
-        return $this->commentRepository->findAllCommentFigure(
+        return $this->commentRepository->commentsForTrickPaginator(
              $page,
              $this->nbrCommentLimitShow,
              $this->trick);
@@ -69,9 +64,13 @@ class CommentPaginate
 
     public function checkPage($page)
     {
+        $nbrPages=$this->getNbrSheets();
         if (is_null($page) || $page < 1) {
            return 1;
+        } else if ($page > $nbrPages ) {
+            $page = $nbrPages;
         }
+
         return $page;
     }
 }

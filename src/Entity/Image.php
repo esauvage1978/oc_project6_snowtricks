@@ -36,6 +36,11 @@ class Image
 
     private $file;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $comment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -116,5 +121,17 @@ class Image
     public function getUploadRootDir(): string
     {
         return dirname(__DIR__, 2) . '/public/'.$this->getUploadDir();
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
+
+        return $this;
     }
 }
